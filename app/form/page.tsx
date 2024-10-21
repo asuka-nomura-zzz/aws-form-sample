@@ -1,14 +1,14 @@
 "use client"
+
 import React, { useState, useEffect } from 'react'
 
 const page = () => {
   const [name, setName] = useState("Hanako");
-  
+
   useEffect(() => {
     // fetch("https://jsonplaceholder.typicode.com/users/1")
     //   .then((res) => res.json())
     //   .then((data) => setName(data.name))
-
 
     const fetchData = async () => {
       const res = await fetch("https://jsonplaceholder.typicode.com/users/1")
