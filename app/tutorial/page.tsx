@@ -1,48 +1,72 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import { supabase } from '../lib/createClient';
-
-// const db = { name: "junya", age: 39, email: "aaa@gmail.com" };
+import React, { useState, useEffect } from "react"
+import { supabase } from '../lib/createClient'
 
 const page = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [selectedSection, setSelectedSection] = useState("")
-
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
   const [sections, setSections] = useState<any[] | null>([])
+  const [selectedSectionId, setSelectedSectionId] = useState("")
+
+  async function fetchData() {
+    return await supabase.from('sections').select('*')
+  }
+
+  async function decreaseStock(sectionId: string, decreaseBy: number) {
+    const getCurrentStock = async () => {
+      const { data } = await fetchData()
+      const selectedSectionStocks: any[] | undefined = data?.filter((section) => {
+        return section.id === Number(sectionId)
+      })
+
+      if (selectedSectionStocks) {
+        console.log(selectedSectionStocks[0].stock)
+        return selectedSectionStocks[0].stock
+      }
+
+      return null
+    }
+
+    const stockNow: number | null = await getCurrentStock()
+
+    if (stockNow && typeof(stockNow) === 'number') {
+      await supabase
+        .from('sections')
+        .update({ stock: stockNow - decreaseBy })
+        .match({ id: sectionId })
+    }
+
+    const fetchAndUpdateData = async () => {
+      const { data } = await fetchData()
+      setSections(data)
+    }
+    fetchAndUpdateData()
+
+    console.log('stock decreased')
+  }
+
+  async function handleSubmit(e: any) {
+    e.preventDefault()
+    await decreaseStock(selectedSectionId, 1)
+    console.log('decreasesStock called')
+  }
 
   useEffect(() => {
-    // setName(db.name)
-    // setEmail(db.email)
-
-    const fetchData = async () => {
-      // const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
-      // const data = await res.json();
-
-      const { data } = await supabase.from('sections').select('*')
-      console.log(data);
-
-      // setName(data.name);
-      // setEmail(data.email);
+    const fetchAndUpdateData = async () => {
+      const { data } = await fetchData()
       setSections(data)
-    };
+    }
+    fetchAndUpdateData()
 
-    fetchData();
-
-    return () => {};
-  }, []);
-
-  function handleSubmit(e: any) {
-    // e.preventDefault()
-    console.log("submitted");
-  }
+    return () => {}
+  }, [])
 
   return (
     <div>
       <p>{name}</p>
       <p>{email}</p>
-      {selectedSection && <p>選ばれているものは{selectedSection}</p>}
+      {selectedSectionId && <p>選ばれているものは{selectedSectionId}</p>}
       <div>
         {sections && sections.map((section) => (
           <p key={section.id}>{section.name}: {section.stock}枠</p>
@@ -61,9 +85,9 @@ const page = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <select onChange={(e) => setSelectedSection(e.target.value)}>
+        <select onChange={(e) => setSelectedSectionId(e.target.value)}>
           {sections?.map((section: any) => (
-            <option key={section.id}>{section.name}: {section.stock}枠</option>
+            <option key={section.id} value={section.id}>{section.name}: {section.stock}枠</option>
           ))}
         </select>
         <button type="submit">送信</button>
@@ -72,4 +96,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default page
