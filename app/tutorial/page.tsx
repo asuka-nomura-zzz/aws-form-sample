@@ -9,25 +9,35 @@ const page = () => {
   const [sections, setSections] = useState<any[] | null>([])
   const [selectedSectionId, setSelectedSectionId] = useState("")
 
+  // function only for fetching data
   async function fetchData() {
     return await supabase.from('sections').select('*')
   }
 
+  // function for decreasing the number of stocks in the db
   async function decreaseStock(sectionId: string, decreaseBy: number) {
+    
+    // function for getting the newest value from db
     const getCurrentStock = async () => {
+      // data fetched first
       const { data } = await fetchData()
+
+      // filtered rows returned and it is assigned into a variable 
       const selectedSectionStocks: any[] | undefined = data?.filter((section) => {
         return section.id === Number(sectionId)
       })
 
+      
       if (selectedSectionStocks) {
-        console.log(selectedSectionStocks[0].stock)
+        // data type is an array even though the number of data should be 1
         return selectedSectionStocks[0].stock
       }
 
+      // if there is no data, null will be returned
       return null
     }
 
+    // call here
     const stockNow: number | null = await getCurrentStock()
 
     if (stockNow && typeof(stockNow) === 'number') {
@@ -41,11 +51,11 @@ const page = () => {
       const { data } = await fetchData()
       setSections(data)
     }
+    //call here
     fetchAndUpdateData()
-
-    console.log('stock decreased')
   }
 
+  // function for updating db based on the value user submits
   async function handleSubmit(e: any) {
     e.preventDefault()
     await decreaseStock(selectedSectionId, 1)
@@ -53,10 +63,12 @@ const page = () => {
   }
 
   useEffect(() => {
+    // function for fetching data from db and assign it to a variable using useState
     const fetchAndUpdateData = async () => {
       const { data } = await fetchData()
       setSections(data)
     }
+    // call here
     fetchAndUpdateData()
 
     return () => {}
@@ -77,15 +89,14 @@ const page = () => {
         <input
           type="text"
           className="border"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
         />
         <input
           type="text"
           className="border"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
         />
-
-        <select onChange={(e) => setSelectedSectionId(e.target.value)}>
+        <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSectionId(e.target.value)}>
           {sections?.map((section: any) => (
             <option key={section.id} value={section.id}>{section.name}: {section.stock}枠</option>
           ))}
