@@ -9,15 +9,15 @@ const page = () => {
   const [sections, setSections] = useState<any[] | null>([])
   const [selectedSectionId, setSelectedSectionId] = useState("")
 
-  // function only for fetching data
+  // function definition only for fetching data
   async function fetchData() {
     return await supabase.from('sections').select('*')
   }
 
-  // function for decreasing the number of stocks in the db
+  // function definition for decreasing the number of stocks in the db
   async function decreaseStock(sectionId: string, decreaseBy: number) {
     
-    // function for getting the newest value from db
+    // function definition for getting the newest value from db
     const getCurrentStock = async () => {
       // data fetched first
       const { data } = await fetchData()
@@ -55,7 +55,7 @@ const page = () => {
     fetchAndUpdateData()
   }
 
-  // function for updating db based on the value user submits
+  // function definition for updating db based on the value user submits
   async function handleSubmit(e: any) {
     e.preventDefault()
     await decreaseStock(selectedSectionId, 1)
@@ -63,7 +63,7 @@ const page = () => {
   }
 
   useEffect(() => {
-    // function for fetching data from db and assign it to a variable using useState
+    // function definition for fetching data from db and assign it to a variable using useState
     const fetchAndUpdateData = async () => {
       const { data } = await fetchData()
       setSections(data)
