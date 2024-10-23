@@ -8,6 +8,17 @@ const page = () => {
   const [sections, setSections] = useState<any[] | null>([]);
   const [selectedSection, setSelectedSection] = useState("")
 
+  const submitHandler = (event: any) => {
+    event.preventDefault()
+    console.log("submitted")
+    //選択されているタイムスロットのIDを取得
+    //そのIDと一致するデータベースのストックを任意の数減らす
+  }
+
+  const decreaseStock = () => {
+    
+  }
+
   useEffect(() => {
     // fetch("https://jsonplaceholder.typicode.com/users/1")
     //   .then((res) => res.json())
@@ -33,7 +44,7 @@ const page = () => {
       <p>{name}</p>
       <p>{selectedSection}</p>
 
-      <form>
+      <form onSubmit={submitHandler}>
         <input type="text" className="border" onChange={(event) => setName(event.target.value)}/>
         <select onChange={(event) => setSelectedSection(event.target.value)}>
           {sections?.map((section)=>(
