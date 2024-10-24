@@ -7,9 +7,13 @@ const page = () => {
   const [name, setName] = useState("Hanako");
   const [sections, setSections] = useState<any[] | null>([]);
   const [selectedSection, setSelectedSection] = useState("")
+  
+  async function fetchData () {
+    return await supabase.from("timeslots").select();
+  }
 
   async function decreaseStock (sectionId: string) {
-    const { data } = await supabase.from("timeslots").select();
+    const { data } = await fetchData()
     const filtered = data?.filter((item) => {
       return item.id === Number(sectionId)
     })
@@ -30,23 +34,14 @@ const page = () => {
     }
   }
 
+  
   useEffect(() => {
-    // fetch("https://jsonplaceholder.typicode.com/users/1")
-    //   .then((res) => res.json())
-    //   .then((data) => setName(data.name))
-
-    const fetchData = async () => {
-      // const res = await fetch("https://jsonplaceholder.typicode.com/users/1")
-      // const data = await res.json()
-      // setName(data.name)
-      // const { data } = await supabase.from("sections").select();
-      const { data } = await supabase.from("timeslots").select();
-
+    const fetchAndAssign = async () => {
+      const { data } = await fetchData()
       setSections(data)
-    } //declare
+    }
 
-    fetchData()  //call
-
+    fetchAndAssign()
   },[])
 
   return (
