@@ -19,6 +19,10 @@ const page = () => {
       .order('id')
   }
 
+  async function updateData() {
+    
+  }
+
   // function definition for decreasing the number of stocks in the db
   async function decreaseStock(sectionId: string, decreaseBy: number) {
     

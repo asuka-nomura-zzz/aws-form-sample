@@ -9,8 +9,15 @@ const page = () => {
   const [selectedSection, setSelectedSection] = useState("")
   
   async function fetchData () {
-    return await supabase.from("timeslots").select();
+    return await supabase.from("timeslots").select('*');
   }
+
+  // async function updateData (beforeStock: number, targetId: string) {
+  //   await supabase
+  //     .from("timeslots")
+  //     .update({ stock: beforeStock - 1})
+  //     .eq("id", Number(targetId))
+  // }
 
   async function decreaseStock (sectionId: string) {
     const { data } = await fetchData()
@@ -20,6 +27,7 @@ const page = () => {
 
     if (filtered) {
       const currentStock = filtered[0].stock
+      // await updateData(currentStock, '1')
       await supabase
         .from("timeslots")
         .update({ stock: currentStock - 1 })
@@ -34,7 +42,7 @@ const page = () => {
     }
   }
 
-  
+
   useEffect(() => {
     const fetchAndAssign = async () => {
       const { data } = await fetchData()
