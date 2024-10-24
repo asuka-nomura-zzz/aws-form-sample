@@ -8,26 +8,26 @@ const page = () => {
   const [sections, setSections] = useState<any[] | null>([]);
   const [selectedSection, setSelectedSection] = useState("")
 
-  async function decreaseStock () {
+  async function decreaseStock (sectionId: string) {
     const { data } = await supabase.from("timeslots").select();
-    const result = data?.filter((item) => {
-      return item.id === 1
+    const filtered = data?.filter((item) => {
+      return item.id === Number(sectionId)
     })
 
-    const currentStock = 20
-    const selectedId = 1
-    const { error } = await supabase
-      .from("timeslots")
-      .update({ stock: currentStock - 1 })
-      .eq("id", selectedId)
+    if (filtered) {
+      const currentStock = filtered[0].stock
+      await supabase
+        .from("timeslots")
+        .update({ stock: currentStock - 1 })
+        .eq("id", Number(sectionId))
+    }
   }
 
   async function submitHandler (event: any) {
     event.preventDefault()
-    console.log("submitted")
-    //選択されているタイムスロットのIDを取得
-    //そのIDと一致するデータベースのストックを任意の数減らす
-    await decreaseStock()
+    if (selectedSection) {
+      await decreaseStock(selectedSection)
+    }
   }
 
   useEffect(() => {
@@ -52,18 +52,27 @@ const page = () => {
   return (
     <div>
 
-      <p>{name}</p>
-      <p>{selectedSection}</p>
+      <p>{name}が選択されています</p>
+      <p>{selectedSection}が選択されています</p>
 
-      <form onSubmit={submitHandler}>
-        <input type="text" className="border" onChange={(event) => setName(event.target.value)}/>
-        <select onChange={(event) => setSelectedSection(event.target.value)}>
-          {sections?.map((section)=>(
-            <option key={section.id}>{section.name} : {section.stock}</option> 
-        ))}
-        </select>
-        <button type="submit" className="bg-blue-200">送信</button>
-      </form>
+      <div className="w-full max-w-xs mx-auto">
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={submitHandler}>
+
+          <input type="text" className="w-full border" onChange={(event) => setName(event.target.value)}/>
+          <br />
+
+          <input type="text" className="w-full border"/>
+
+          <select className="w-full border" onChange={(event) => setSelectedSection(event.target.value)}>
+            {sections?.map((section)=>(
+              <option key={section.id} value={section.id}>{section.name} : {section.stock}</option> 
+          ))}
+          </select>
+
+          <button type="submit" className="bg-blue-200 mt-2 py-2 px-4 rounded">送信</button>
+        </form>
+
+      </div>
 
     </div>
   )

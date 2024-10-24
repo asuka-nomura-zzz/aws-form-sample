@@ -7,11 +7,8 @@ const items = [
   {id: 1, stock: 100},
 ]
 
-// console.log(items)
-
-
 const filtered = items.filter((item) => {
-  return item.id === 1
+  return item.id === 2
 })
 
 console.log(filtered)
