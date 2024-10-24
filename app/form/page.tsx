@@ -8,15 +8,26 @@ const page = () => {
   const [sections, setSections] = useState<any[] | null>([]);
   const [selectedSection, setSelectedSection] = useState("")
 
-  const submitHandler = (event: any) => {
+  async function decreaseStock () {
+    const { data } = await supabase.from("timeslots").select();
+    const result = data?.filter((item) => {
+      return item.id === 1
+    })
+
+    const currentStock = 20
+    const selectedId = 1
+    const { error } = await supabase
+      .from("timeslots")
+      .update({ stock: currentStock - 1 })
+      .eq("id", selectedId)
+  }
+
+  async function submitHandler (event: any) {
     event.preventDefault()
     console.log("submitted")
     //選択されているタイムスロットのIDを取得
     //そのIDと一致するデータベースのストックを任意の数減らす
-  }
-
-  const decreaseStock = () => {
-    
+    await decreaseStock()
   }
 
   useEffect(() => {
