@@ -4,41 +4,38 @@ import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/createClient'
 
 const page = () => {
-  const [name, setName] = useState("Hanako");
-  const [sections, setSections] = useState<any[] | null>([]);
-  const [selectedSection, setSelectedSection] = useState("")
-  
+
+  const [fruits, setFruits] = useState<any[] | null>([])
+  const [selectedFruit, setSelectedFruit] = useState("")
+  const [numberOfOrders, setNumberOfOrders] = useState("0")
+
+
   async function fetchData () {
-    return await supabase.from("timeslots").select('*');
+    return await supabase.from("fruitstable").select().gt("stock", 0);
   }
 
-  // async function updateData (beforeStock: number, targetId: string) {
-  //   await supabase
-  //     .from("timeslots")
-  //     .update({ stock: beforeStock - 1})
-  //     .eq("id", Number(targetId))
-  // }
 
-  async function decreaseStock (sectionId: string) {
+  async function decreaseStock (fruitId: string, decreaseBy: string) {
     const { data } = await fetchData()
-    const filtered = data?.filter((item) => {
-      return item.id === Number(sectionId)
-    })
 
-    if (filtered) {
-      const currentStock = filtered[0].stock
-      // await updateData(currentStock, '1')
+    const filteredFruits = data?.filter((fruit) => {
+      return fruit.id === Number(fruitId)
+    })
+    console.log(filteredFruits)
+
+    if (filteredFruits) {
+      const currentStock = filteredFruits[0].stock
       await supabase
-        .from("timeslots")
-        .update({ stock: currentStock - 1 })
-        .eq("id", Number(sectionId))
+      .from("fruitstable")
+      .update({ stock: currentStock - Number(decreaseBy)})
+      .eq("id", Number(fruitId))
     }
   }
 
   async function submitHandler (event: any) {
     event.preventDefault()
-    if (selectedSection) {
-      await decreaseStock(selectedSection)
+    if (selectedFruit && numberOfOrders) {
+      await decreaseStock(selectedFruit, numberOfOrders)
     }
   }
 
@@ -46,7 +43,7 @@ const page = () => {
   useEffect(() => {
     const fetchAndAssign = async () => {
       const { data } = await fetchData()
-      setSections(data)
+      setFruits(data)
     }
 
     fetchAndAssign()
@@ -55,24 +52,26 @@ const page = () => {
   return (
     <div>
 
-      <p>{name}が選択されています</p>
-      <p>{selectedSection}が選択されています</p>
+      <p>{selectedFruit}が選択されています</p>
+      <p>{numberOfOrders}</p>
 
       <div className="w-full max-w-xs mx-auto">
+
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={submitHandler}>
 
-          <input type="text" className="w-full border" onChange={(event) => setName(event.target.value)}/>
-          <br />
-
-          <input type="text" className="w-full border"/>
-
-          <select className="w-full border" onChange={(event) => setSelectedSection(event.target.value)}>
-            {sections?.map((section)=>(
-              <option key={section.id} value={section.id}>{section.name} : {section.stock}</option> 
-          ))}
+          <select className="w-full border" onChange={(event) => setNumberOfOrders(event.target.value)}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
           </select>
 
-          <button type="submit" className="bg-blue-200 mt-2 py-2 px-4 rounded">送信</button>
+          <select className="w-full border" onChange={(event) => setSelectedFruit(event.target.value)}>
+            {fruits?.map((fruit)=>(
+              <option key={fruit.id} value={fruit.id}>{fruit.name}</option> 
+            ))}
+          </select>
+
+          <button type="submit" className="bg-blue-200 mt-2 py-2 px-4 rounded">注文する</button>
         </form>
 
       </div>
