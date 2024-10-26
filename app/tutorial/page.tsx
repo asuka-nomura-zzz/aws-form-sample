@@ -3,133 +3,240 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/createClient'
 
+type Timeslot = {
+  id: number;
+  name: string;
+  stock: number;
+}
+
+type Influencer = {
+  name: string;
+  kana_name: string;
+  email: string;
+  birthdate: string;
+  is_attend: boolean;
+  timeslot?: number;
+  number_of_attendees?: number;
+  first_companion_name?: string;
+  second_companion_name?: string;
+}
+
 const page = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [sections, setSections] = useState<any[] | null>([])
-  const [selectedSectionId, setSelectedSectionId] = useState('')
-  const [numberOfAttendees, setNumberOfAttendees] = useState('0') //note that html value is string 
 
-  // function definition only for fetching data
-  async function fetchData() {
-    return await supabase
-      .from('sections')
-      .select('*')
-      .gt('stock', 0)
-      .order('id')
+  const [name, setName] = useState<string>('')
+  const [kanaName, setKanaName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [birthdate, setBirthdate] = useState<string>(
+    new Date(2000, 1, 1)
+    .toLocaleDateString('ja-JP', {
+      year: 'numeric', month: '2-digit', day: '2-digit'
+    })
+    .replaceAll('/', '-')
+  )
+  const [isAttend, setIsAttend] = useState<boolean>(false)
+  const [timeslots, setTimeslots] = useState<Timeslot[] | null>([])
+  const [numberOfAttendees, setNumberOfAttendees] = useState<string>('1')
+  const [firstCompanionName, setFirstCompanionName] = useState<string>('')
+  const [secondCompanionName, setSecondCompanionName] = useState<string>('')
+
+  const [selectedTimeslots, setSelectedTimeslots] = useState<string>('1')
+
+  let influencer: Influencer = {
+    name: '花子',
+    kana_name: 'はなこ',
+    email: 'aaa@gmail.com',
+    birthdate: '2000-01-01',
+    is_attend: true,
+    timeslot: 2,
+    number_of_attendees: 3,
+    first_companion_name: '太郎',
+    second_companion_name: '次郎',
+  };
+
+  
+  async function fetchData () {
+    return await supabase.from('timeslots').select().gt('stock', 0).order('id')
   }
 
-  async function updateData() {
-    
+  async function postInfluencer (personInfo: Influencer) {
+    await supabase.from('influencers').insert(personInfo)
   }
 
-  // function definition for decreasing the number of stocks in the db
-  async function decreaseStock(sectionId: string, decreaseBy: number) {
-    
-    // function definition for getting the newest value from db
-    const getCurrentStock = async () => {
-      // data fetched first
-      const { data } = await fetchData()
+  async function decreaseStock (timeslotId: string, decreaseBy: string) {
+    const { data } = await fetchData()
 
-      // filtered rows returned and it is assigned into a variable 
-      const selectedSectionStocks: any[] | undefined = data?.filter((section) => {
-        return section.id === Number(sectionId)
-      })
+    const filteredTimeslot = data?.filter((timeslot) => {
+      return timeslot.id === Number(timeslotId)
+    })
+    console.log(filteredTimeslot)
 
+    if (filteredTimeslot) {
+      const currentStock = filteredTimeslot[0].stock
       
-      if (selectedSectionStocks) {
-        // data type is an array even though the number of data should be 1
-        return selectedSectionStocks[0].stock
+      if (currentStock < Number(decreaseBy)) {
+        alert('not enough stock')
+        return
       }
-
-      // if there is no data, null will be returned
-      return null
-    }
-
-    // call here
-    const stockNow: number | null = await getCurrentStock()
-
-    if (stockNow && typeof(stockNow) === 'number' && stockNow >= decreaseBy) {
       await supabase
-        .from('sections')
-        .update({ stock: stockNow - decreaseBy })
-        .match({ id: sectionId })
-    } else {
-      console.log('更新に失敗しました')
+        .from('timeslots')
+        .update({ stock: currentStock - Number(decreaseBy)})
+        .eq('id', Number(timeslotId))
     }
-
-    // db has updated, so fetch new data so that browser can show current data
-    const fetchAndUpdateData = async () => {
-      const { data } = await fetchData()
-      setSections(data)
-    }
-    //call here
-    fetchAndUpdateData()
   }
 
-  // function definition for updating db based on the value user submits
-  async function handleSubmit(e: any) {
-    e.preventDefault()
-    if (selectedSectionId) {
-      await decreaseStock(selectedSectionId, Number(numberOfAttendees))
-    }
-
-    // clear states
-    setName('')
-    setEmail('')
-    setSelectedSectionId('')
-    setNumberOfAttendees('0')
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    // if (selectedTimeslots && numberOfAttendees) {
+    //   await decreaseStock(selectedTimeslots, numberOfAttendees)
+    // }
+    await postInfluencer(influencer)
   }
+
 
   useEffect(() => {
-    // function definition for fetching data from db and assign it to a variable using useState
-    const fetchAndUpdateData = async () => {
-      const { data } = await fetchData()
-      setSections(data)
-    }
-    // call here
-    fetchAndUpdateData()
+    // const fetchAndAssign = async () => {
+    //   const { data } = await fetchData()
+    //   setTimeslots(data)
+    // }
+
+    // fetchAndAssign()
+    fetchData().then((res) => setTimeslots(res.data))
 
     return () => {}
-  }, [])
+  },[])
 
   return (
     <div>
-      <p>{name}</p>
-      <p>{email}</p>
-      {selectedSectionId && <p>選ばれているものは{selectedSectionId}</p>}
-      <div>
-        {sections && sections.map((section) => (
-          <p key={section.id}>{section.name}: {section.stock}枠</p>
-        ))}
-      </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="border"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          className="border"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-        />
-        <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedSectionId(e.target.value)}>
-          {sections?.map((section: any) => (
-            <option key={section.id} value={section.id}>{section.name}: {section.stock}枠</option>
-          ))}
-        </select>
-        <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setNumberOfAttendees(e.target.value)}>
-          <option value="0">不参加</option>
-          <option value="1">1人</option>
-          <option value="2">2人</option>
-          <option value="3">3人</option>
-        </select>
-        <button type="submit">送信</button>
-      </form>
+      <p>名前は{name}</p>
+      <p>よみがなは{kanaName}</p>
+      <p>emailは{email}</p>
+      <p>生年月日は{birthdate}</p>
+      <p>1人目の同行者は{firstCompanionName}</p>
+      <p>2人目の同行者は{secondCompanionName}</p>
+
+      <p>{selectedTimeslots}が選択されています</p>
+      <p>{numberOfAttendees}</p>
+
+      <div className="w-full max-w-md mx-auto">
+
+        <form 
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" 
+          onSubmit={handleSubmit}
+        >
+          
+          <div className="mb-6">
+            <label htmlFor="name">名前</label>
+            <input 
+              type="text" 
+              id="name"
+              value={name} 
+              className="w-full border invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
+              required
+            />   
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="kanaName">読み仮名</label>
+            <input 
+              type="text" 
+              id="kanaName"
+              value={kanaName} 
+              className="w-full border invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setKanaName(event.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="mb-6">
+            <label htmlFor="email">メールアドレス</label>
+            <input 
+              type="email" 
+              id="email"
+              value={email} 
+              className="w-full border invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+              pattern="[\-a-zA-Z0-9~!$%^&amp;*_=+\}\{'?]+(\.[\-a-zA-Z0-9~!$%^&amp;*_=+\}\{'?]+)*@[a-zA-Z0-9_][\-a-zA-Z0-9_]*(\.[\-a-zA-Z0-9_]+)*\.[cC][oO][mM](:[0-9]{1,5})?"
+              required
+            />
+            <span className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              Please enter a valid email address
+            </span>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="birthdate">生年月日</label>
+            <input 
+              type="date" 
+              id="birthdate"
+              value={birthdate} 
+              className="w-full border invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setBirthdate(event.target.value)}
+              required
+            />        
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="timeslot">時間帯</label>
+            <select 
+              id="timeslot" 
+              className="w-full border" 
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setSelectedTimeslots(event.target.value)}
+            >
+              <option value="0">-</option>
+              {timeslots?.map((timeslot: Timeslot)=>(
+                <option key={timeslot.id} value={timeslot.id}>{timeslot.name}</option> 
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="numberOfAttendees">参加人数</label>
+            <select
+              id="numberOfAttendees"
+              className="w-full border"
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setNumberOfAttendees(event.target.value)}
+            >
+              <option value="0">-</option>
+              <option value="1">1名（ご本人様のみ）</option>
+              <option value="2">2名（同伴者様1名）</option>
+              <option value="3">3名（同伴者様2名）</option>
+            </select>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="1st">一人目の同行者様</label>
+            <input 
+              type="text" 
+              id="1st" 
+              value={firstCompanionName} 
+              className="w-full border"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFirstCompanionName(event.target.value)}
+            />
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="2nd">二人目の同行者様</label>
+            <input 
+              type="text" 
+              id="2nd"
+              value={secondCompanionName} 
+              className="w-full border"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSecondCompanionName(event.target.value)}
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            className="bg-blue-500 text-white mt-2 py-2 px-4 rounded cursor-pointer"
+          >
+            申し込む
+          </button>
+        </form>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default page
