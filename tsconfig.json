@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "app/lib/createClient.js"  ],
   "exclude": [
     "node_modules"
   ]
