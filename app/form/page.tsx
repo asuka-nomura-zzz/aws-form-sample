@@ -18,11 +18,23 @@ const page = () => {
   const [secondCompanionName, setSecondCompanionName] = useState("")
   const [email, setEmail] = useState("")
 
-
   const [timeslots, setTimeslots] = useState<any[] | null>([])
   const [selectedTimeslots, setSelectedTimeslots] = useState("1")
   const [numberOfAttendees, setNumberOfAttendees] = useState("1")
-
+  
+  async function postInfluencer (e: any) {
+    await supabase.from("influencers").insert({
+      name: "花子",
+      kana_name: "はなこ",
+      email: "aaa@gmail.com",
+      birthdate: "2000-01-01",
+      first_companion_name: "太郎",
+      second_companion_name: "次郎",
+      is_attend: true,
+      timeslot: 2,
+      number_of_attendees: 3
+    })
+  }
 
   async function fetchData () {
     return await supabase.from("timeslots").select().gt("stock", 0).order("id");
@@ -53,9 +65,10 @@ const page = () => {
 
   async function submitHandler (event: any) {
     event.preventDefault()
-    if (selectedTimeslots && numberOfAttendees) {
-      await decreaseStock(selectedTimeslots, numberOfAttendees)
-    }
+    // if (selectedTimeslots && numberOfAttendees) {
+    //   await decreaseStock(selectedTimeslots, numberOfAttendees)
+    // }
+    await postInfluencer(event)
   }
 
 
@@ -138,6 +151,7 @@ const page = () => {
 
           <button type="submit" className="bg-blue-200 mt-2 py-2 px-4 rounded cursor-pointer">申し込む</button>
 
+          {/* <button onClick={postInfluencer}>post</button> */}
         </form>
 
       </div>
