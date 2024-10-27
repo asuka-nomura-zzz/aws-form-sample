@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/createClient'
+import { PostgrestSingleResponse } from '@supabase/supabase-js';
+import { notFound } from 'next/navigation';
 
 type Timeslot = {
   id: number;
@@ -34,7 +36,7 @@ const page = () => {
     .replaceAll('/', '-')
   )
   const [isAttend, setIsAttend] = useState<boolean>(false)
-  const [timeslots, setTimeslots] = useState<Timeslot[] | null>([])
+  const [timeslots, setTimeslots] = useState<Timeslot[]>([])
   const [numberOfAttendees, setNumberOfAttendees] = useState<string>('1')
   const [firstCompanionName, setFirstCompanionName] = useState<string>('')
   const [secondCompanionName, setSecondCompanionName] = useState<string>('')
@@ -54,11 +56,11 @@ const page = () => {
   };
 
   
-  async function fetchData () {
+  async function fetchData (): Promise<PostgrestSingleResponse<{[x: string]: any;}[]>> {
     return await supabase.from('timeslots').select().gt('stock', 0).order('id')
   }
 
-  async function postInfluencer (personInfo: Influencer) {
+  async function postInfluencer (personInfo: Influencer): Promise<void> {
     await supabase.from('influencers').insert(personInfo)
   }
 
@@ -94,13 +96,26 @@ const page = () => {
 
 
   useEffect(() => {
-    // const fetchAndAssign = async () => {
-    //   const { data } = await fetchData()
-    //   setTimeslots(data)
-    // }
+    const fetchAndAssign = async () => {
+      const fetchedData = await fetchData()
+      const data = fetchedData.data
+      
+      if (Array.isArray(data)) {
+        const timeslotArray: Timeslot[] = data.map((item) => ({
+          id: item.id ?? 0, // id が undefined の場合のデフォルト値
+          name: item.name ?? "未定義", // name が undefined の場合のデフォルト値
+          stock: item.stock ?? 0, // stock が undefined の場合のデフォルト値
+        }));
 
-    // fetchAndAssign()
-    fetchData().then((res) => setTimeslots(res.data))
+        console.log(timeslotArray); // Timeslot 型の配列
+        setTimeslots(timeslotArray)
+      } else {
+        console.error("取得したデータが配列ではありません。");
+      }
+
+    }
+
+    fetchAndAssign()
 
     return () => {}
   },[])
