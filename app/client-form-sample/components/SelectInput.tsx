@@ -9,8 +9,8 @@ interface SelectInputProps {
 const SelectInput: React.FC<SelectInputProps> = ({ label, options, onChange }) => {
   return (
     <div className="mb-6">
-      <label>{label}</label>
-      <select className="w-full border" onChange={onChange}>
+      <label htmlFor={label}>{label}</label>
+      <select id={label} className="w-full border" onChange={onChange}>
         <option value="0">-</option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
