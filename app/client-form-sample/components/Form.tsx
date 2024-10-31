@@ -9,7 +9,7 @@ import { Timeslot } from '../types/Timeslot';
 import { Influencer } from '../types/Influencer';
 
 const Form = () => {
-  const [name, setName] = useState<string>('')
+  const [fullName, setFullName] = useState<string>('')
   const [kanaName, setKanaName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [birthdate, setBirthdate] = useState<string>(
@@ -28,7 +28,7 @@ const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   let influencer: Influencer = {
-    name: name,
+    full_name: fullName,
     kana_name: kanaName,
     email: email,
     birthdate: birthdate,
@@ -112,7 +112,7 @@ const Form = () => {
         await decreaseStock(selectedTimeslot, numberOfAttendees)
       }
       await postInfluencer(influencer)
-      setName('')
+      setFullName('')
       setKanaName('')
       setEmail('')
       setBirthdate('')
@@ -147,7 +147,7 @@ const Form = () => {
       <p>送信ありがとうございました</p>
       :
       <form onSubmit={handleSubmit}>
-        <FormInput label="名前" value={name} onChange={(e) => setName(e.target.value)} />
+        <FormInput label="名前" value={fullName} onChange={(e) => setFullName(e.target.value)} />
         <FormInput label="読み仮名" value={kanaName} onChange={(e) => setKanaName(e.target.value)} />
         <FormInput label="メールアドレス" value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
         <FormInput label="生年月日" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} type="date" />

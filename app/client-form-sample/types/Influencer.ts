@@ -1,5 +1,5 @@
 export type Influencer = {
-  name: string;
+  full_name: string;
   kana_name: string;
   email: string;
   birthdate: string;

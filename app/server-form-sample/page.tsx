@@ -1,8 +1,18 @@
+'use client'
+
 import React from 'react'
+import { useAppContext } from './context/useAppContext'
 
 const page = () => {
+  const { timeslots } = useAppContext()
+
   return (
-    <div>page</div>
+    // <div>
+    //   {timeslots.map((timeslot) => (
+    //     <p>{timeslot.name}</p>
+    //   ))}
+    // </div>
+    <></>
   )
 }
 
