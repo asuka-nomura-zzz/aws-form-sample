@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface FormInputProps {
+type FormInputProps = {
   label: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,8 +10,9 @@ interface FormInputProps {
 const FormInput: React.FC<FormInputProps> = ({ label, value, onChange, type = 'text' }) => {
   return (
     <div className="mb-6">
-      <label>{label}</label>
+      <label htmlFor={label}>{label}</label>
       <input
+        id={label}
         type={type}
         value={value}
         className="w-full border"

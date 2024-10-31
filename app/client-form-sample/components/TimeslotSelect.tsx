@@ -2,7 +2,7 @@ import React from 'react';
 import SelectInput from './SelectInput';
 import { Timeslot } from '../types/Timeslot';
 
-interface TimeslotSelectProps {
+type TimeslotSelectProps = {
   timeslots: Timeslot[];
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }

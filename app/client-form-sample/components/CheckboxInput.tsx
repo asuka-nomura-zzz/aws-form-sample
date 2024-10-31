@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface CheckboxInputProps {
+type CheckboxInputProps = {
   label: string;
   checked: boolean;
   onChange: () => void;
@@ -9,8 +9,8 @@ interface CheckboxInputProps {
 const CheckboxInput: React.FC<CheckboxInputProps> = ({ label, checked, onChange }) => {
   return (
     <div className="mb-6">
-      <label>{label}</label>
-      <input type="checkbox" checked={checked} onChange={onChange} />
+      <label htmlFor={label}>{label}</label>
+      <input id={label} type="checkbox" checked={checked} onChange={onChange} />
     </div>
   );
 };

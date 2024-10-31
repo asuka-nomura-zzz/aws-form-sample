@@ -1,11 +1,11 @@
 'use client'
 
-import MainForm from './components/MainForm';
+import Form from './components/Form';
 
 const page = () => {
   return (
     <div>
-      <MainForm />
+      <Form />
     </div>
   )
 }

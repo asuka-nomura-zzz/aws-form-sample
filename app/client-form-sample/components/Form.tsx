@@ -8,7 +8,7 @@ import TimeslotSelect from './TimeslotSelect';
 import { Timeslot } from '../types/Timeslot';
 import { Influencer } from '../types/Influencer';
 
-const MainForm = () => {
+const Form = () => {
   const [name, setName] = useState<string>('')
   const [kanaName, setKanaName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
@@ -184,4 +184,4 @@ const MainForm = () => {
   );
 };
 
-export default MainForm;
+export default Form;

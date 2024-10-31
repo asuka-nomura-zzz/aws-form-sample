@@ -1,7 +1,7 @@
 import React from 'react';
 import FormInput from './FormInput';
 
-interface CompanionInputsProps {
+type CompanionInputsProps = {
   numberOfAttendees: number;
   firstCompanionName: string;
   setFirstCompanionName: (name: string) => void;
