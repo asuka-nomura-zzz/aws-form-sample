@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { FormData } from '../types/FormData';
 import clsx from 'clsx';
 
-const Page = () => {
+const page = () => {
   const {
     register,
     handleSubmit,
@@ -29,4 +29,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default page

@@ -12,7 +12,9 @@ const page = () => {
     //     <p>{timeslot.name}</p>
     //   ))}
     // </div>
-    <></>
+    <>
+      <p>this is server form top page</p>
+    </>
   )
 }
 
