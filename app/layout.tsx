@@ -15,11 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
+      <body className="bg-gray-100"
       >
-        <h1 className="bg-yellow-300 p-3 text-center">イベント集客フォーム</h1>
-        
-        {children}
+        <div className="max-w-7xl min-h-44 mx-10 my-10 xl:mx-auto p-6 bg-white shadow-lg">
+          <h1 className="p-3 text-center font-bold text-2xl">イベント集客フォーム</h1>
+          {children}
+        </div>
       </body>
     </html>
   );

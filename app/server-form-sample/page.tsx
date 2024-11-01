@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { useAppContext } from './context/useAppContext'
+import Link from 'next/link'
 
 const page = () => {
   // const { timeslots } = useAppContext()
@@ -53,6 +54,10 @@ const page = () => {
         ))
       }
 
+
+      <Link href="./">
+        <p className='my-10 hover:underline'>TOPへ戻る</p>
+      </Link>
 
     </div>
   )

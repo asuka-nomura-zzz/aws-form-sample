@@ -7,6 +7,7 @@ import CompanionInputs from './CompanionInputs';
 import TimeslotSelect from './TimeslotSelect';
 import { Timeslot } from '../types/Timeslot';
 import { Influencer } from '../types/Influencer';
+import Link from 'next/link';
 
 const Form = () => {
   const [fullName, setFullName] = useState<string>('')
@@ -144,7 +145,12 @@ const Form = () => {
   return (
     <div>
       {isSubmitted ? 
-      <p>送信ありがとうございました</p>
+      <>
+        <p>送信ありがとうございました</p>
+        <Link href="./">
+          <p className='hover:underline'>TOPへ戻る</p>
+         </Link>
+      </>
       :
       <form onSubmit={handleSubmit}>
         <FormInput label="名前" value={fullName} onChange={(e) => setFullName(e.target.value)} />
@@ -180,6 +186,11 @@ const Form = () => {
         <button type="submit" className="bg-blue-500 text-white mt-2 py-2 px-4 rounded cursor-pointer">申し込む</button>
       </form>
       }
+
+        <Link href="./">
+         <p className='my-10 hover:underline'>TOPへ戻る</p>
+        </Link>
+        
     </div>
   );
 };
