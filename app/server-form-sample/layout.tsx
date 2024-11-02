@@ -18,12 +18,10 @@ const Layout = async ({children}: any) => {
     }));
   
   return (
-    <div>
-      <AppWrapper timeslots={timeslots}>
-        server layout
-        {children}
-      </AppWrapper>
-    </div>
+    <AppWrapper timeslots={timeslots}>
+      server layout
+      {children}
+    </AppWrapper>
   )
 }
 
