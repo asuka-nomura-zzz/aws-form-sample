@@ -1,12 +1,17 @@
 'use client'
 
 import React from 'react'
+import { useAppContext } from '../context/useAppContext';
 import { useFormContext } from 'react-hook-form'
 import { FormData } from '../types/FormData';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
+
 const page = () => {
+
+  const { timeslots } = useAppContext()
+
   const {
     register,
     handleSubmit,
@@ -76,14 +81,15 @@ const page = () => {
 
 
         <label>参加枠</label>
-        <input
-          type="select"
-          className={clsx(
-            "border appearance-none rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline", { "border border-red-500": errors.selectedTimeslot, "": !errors.selectedTimeslot}
-          )}
-          id="selectedTimeslot"
+        <select 
           {...register("selectedTimeslot")}
-        />
+        >
+          {timeslots.map((timeslot) => (
+            <option key={timeslot.id} value={timeslot.id}>
+              {timeslot.name} あと{timeslot.stock}個
+            </option>
+          ))}
+        </select>
         <p className="text-red-500 text-xs italic">{errors.selectedTimeslot?.message}</p>
 
         {/* <label>参加人数</label>
@@ -95,7 +101,24 @@ const page = () => {
           {...register("fullName")}
         />
         <p className="text-red-500 text-xs italic">{errors.fullName?.message}</p> */}
-
+        <label>参加人数</label>
+        <select 
+          {...register("numberOfAttendees")}
+        >
+          <option value="0">
+            -
+          </option>
+          <option value="1">
+            1
+          </option>
+          <option value="2">
+            2
+          </option>
+          <option value="3">
+            3
+          </option>
+        </select>
+        <p className="text-red-500 text-xs italic">{errors.selectedTimeslot?.message}</p>
         <label>一人目の同伴者</label>
         <input
           type="text"
