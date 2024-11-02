@@ -83,7 +83,7 @@ const Form = () => {
       console.log(filteredTimeslot)
   
       if (!filteredTimeslot) {
-        return;
+        return
       }
   
       const currentStock = filteredTimeslot.stock
@@ -143,7 +143,7 @@ const Form = () => {
 
 
   return (
-    <div>
+    <>
       {isSubmitted ? 
       <>
         <p>送信ありがとうございました</p>
@@ -183,15 +183,13 @@ const Form = () => {
           </>
         )}
 
-        <button type="submit" className="bg-blue-500 text-white mt-2 py-2 px-4 rounded cursor-pointer">申し込む</button>
+        <div className="flex flex-row items-center justify-center gap-8 mt-4">
+          <Link href="/" className="hover:underline">TOPへ戻る</Link>
+          <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-400 duration-200">送信する</button>
+        </div>
       </form>
-      }
-
-        <Link href="./">
-         <p className='my-10 hover:underline'>TOPへ戻る</p>
-        </Link>
-        
-    </div>
+      }        
+    </>
   );
 };
 

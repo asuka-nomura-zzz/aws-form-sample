@@ -3,8 +3,10 @@ import Link from 'next/link'
 const page = () => {
   return (
     <>
-      <div>thanks page</div>
-      <Link href="/server-form-sample/invitation">フォームのトップに戻る</Link>
+      <p>申込ありがとうございました</p>
+      <div className='hover:underline'>
+        <Link href="/">トップに戻る</Link>
+      </div>
     </>
   )
 }

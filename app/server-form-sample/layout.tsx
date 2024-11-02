@@ -9,17 +9,15 @@ const Layout = async ({children}: any) => {
     .select()
     .gt('stock', 0)
     .order('id')
+    
+  const timeslots = (data ?? []).map(item => ({
+    id: item.id as number,
+    name: item.name as string,
+    stock: item.stock as number,
+  }));
 
-    // データをTimeslot型にマッピング
-    const timeslots = (data ?? []).map(item => ({
-      id: item.id as number,
-      name: item.name as string,
-      stock: item.stock as number,
-    }));
-  
   return (
     <AppWrapper timeslots={timeslots}>
-      server layout
       {children}
     </AppWrapper>
   )
