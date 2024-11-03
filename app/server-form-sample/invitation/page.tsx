@@ -83,7 +83,7 @@ const page = () => {
         />
         <p className="text-red-500 text-xs italic">{errors.isAttend?.message}</p>
 
-        {isAttend &&
+        {/* {isAttend && */}
           <>
             <label>時間帯</label>
             <select 
@@ -111,7 +111,7 @@ const page = () => {
               <option value="3">3名（同伴者様2名）</option>
             </select>
 
-            {Number(numberOfAttendees) >= 2 &&
+            {/* {Number(numberOfAttendees) >= 2 && */}
               <>
                 <p className="text-red-500 text-xs italic">{errors.numberOfAttendees?.message}</p>
                 <label>一人目の同伴者</label>
@@ -125,9 +125,9 @@ const page = () => {
                 />
                 <p className="text-red-500 text-xs italic">{errors.firstCompanionName?.message}</p> 
               </>
-            }
+            {/* } */}
 
-            {Number(numberOfAttendees) === 3 &&
+            {/* {Number(numberOfAttendees) === 3 && */}
               <>
                 <label>二人目の同伴者</label>
                 <input
@@ -140,9 +140,9 @@ const page = () => {
                 />
                 <p className="text-red-500 text-xs italic">{errors.secondCompanionName?.message}</p>  
               </>
-            }
+            {/* } */}
           </>        
-        }
+        {/* } */}
 
         <div className="flex flex-row items-center justify-center gap-8 mt-4">
           <Link href="/" className="hover:underline">TOPへ戻る</Link>

@@ -31,7 +31,7 @@ const page = () => {
 
     if (error) {
       console.error('Error fetching timeslots:', error)
-      throw new Error('時間帯の取得に失敗しました')
+      throw new Error('failed to get timeslots')
     }
 
     const filteredTimeslot = data?.find((timeslot) => {
@@ -57,7 +57,7 @@ const page = () => {
 
     if (updateError) {
       console.error('Error updating stock:', updateError)
-      throw new Error('在庫の更新に失敗しました')
+      throw new Error('failed to update stock')
     }
   }
   
@@ -68,7 +68,7 @@ const page = () => {
 
     if (error) {
       console.error('Error posting influencer:', error)
-      throw new Error('インフルエンサーの登録に失敗しました')
+      throw new Error('failed to post influencer')
     }
   }
 
