@@ -1,24 +1,22 @@
 'use client'
 
 import { createContext, useContext, FC, PropsWithChildren } from 'react'
-
-type Timeslot = {
-  id: number;
-  name: string;
-  stock: number;
-}
+import { Timeslot } from '@/app/types/Timeslot';
 
 export const AppContext = createContext<{
-  timeslots: Timeslot[]
+  timeslots: Timeslot[],
+  timeslotsFromAws: Timeslot[]
 }>({
-  timeslots: []
+  timeslots: [],
+  timeslotsFromAws: []
 });
 
 export const AppWrapper: FC<PropsWithChildren<{
   timeslots: Timeslot[],
-}>> = ({ timeslots, children }) => {
+  timeslotsFromAws: Timeslot[]
+}>> = ({ timeslots, timeslotsFromAws, children }) => {
   return (
-    <AppContext.Provider value={{timeslots}}>
+    <AppContext.Provider value={{timeslots, timeslotsFromAws}}>
       {children}
     </AppContext.Provider>
   )

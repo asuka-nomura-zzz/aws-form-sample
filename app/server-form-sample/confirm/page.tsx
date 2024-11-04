@@ -4,73 +4,64 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useFormContext } from 'react-hook-form'
 import Link from 'next/link'
-import { supabase } from '@/app/lib/createClient'
-
-type Influencer = {
-  full_name: string;
-  kana_name: string;
-  email: string;
-  birthdate: string;
-  is_attend: boolean;
-  timeslot?: number;
-  number_of_attendees?: number;
-  first_companion_name?: string;
-  second_companion_name?: string;
-}
+// import { supabase } from '@/app/lib/createClient'
+import { Influencer } from '@/app/types/Influencer'
+import { postInfluencer } from '@/app/utils/postInfluencer'
+import { decreaseStock } from '@/app/utils/decreaseStock'
 
 const page = () => {
   const router = useRouter()
   const { getValues, handleSubmit, reset } = useFormContext()
 
-  async function decreaseStock(timeslotId: string, decreaseBy: string) {
-    const { data, error } = await supabase
-      .from('timeslots')
-      .select()
-      .gt('stock', 0)
-      .order('id') 
+  // async function decreaseStock(timeslotId: string, decreaseBy: string) {
+  //   const { data, error } = await supabase
+  //     .from('timeslots')
+  //     .select()
+  //     .gt('stock', 0)
+  //     .order('id') 
 
-    if (error) {
-      console.error('Error fetching timeslots:', error)
-      throw new Error('failed to get timeslots')
-    }
+  //   if (error) {
+  //     console.error('Error fetching timeslots:', error)
+  //     throw new Error('failed to get timeslots')
+  //   }
 
-    const filteredTimeslot = data?.find((timeslot) => {
-      return timeslot.id === Number(timeslotId)
-    })
+  //   const filteredTimeslot = data?.find((timeslot) => {
+  //     return timeslot.id === Number(timeslotId)
+  //   })
 
-    if (!filteredTimeslot) {
-      console.error('No timeslot found with the given ID')
-      return;
-    }
+  //   if (!filteredTimeslot) {
+  //     console.error('No timeslot found with the given ID')
+  //     return;
+  //   }
 
-    const currentStock = filteredTimeslot.stock
+  //   const currentStock = filteredTimeslot.stock
 
-    if (currentStock < Number(decreaseBy)) {
-      console.log('not enough stock')
-      return
-    }
+  //   if (currentStock < Number(decreaseBy)) {
+  //     console.log('not enough stock')
+  //     return
+  //   }
     
-    const { error: updateError } = await supabase
-      .from('timeslots')
-      .update({ stock: currentStock - Number(decreaseBy) })
-      .eq('id', Number(timeslotId))
+  //   const { error: updateError } = await supabase
+  //     .from('timeslots')
+  //     .update({ stock: currentStock - Number(decreaseBy) })
+  //     .eq('id', Number(timeslotId))
 
-    if (updateError) {
-      console.error('Error updating stock:', updateError)
-      throw new Error('failed to update stock')
-    }
-  }
+  //   if (updateError) {
+  //     console.error('Error updating stock:', updateError)
+  //     throw new Error('failed to update stock')
+  //   }
+  // }
   
-  async function postInfluencer(personInfo: Influencer) {
-    const { error } = await supabase
-      .from('influencers')
-      .insert(personInfo)
+  // async function postInfluencer(personInfo: Influencer) {
+  //   const { error } = await supabase
+  //     .from('influencers')
+  //     .insert(personInfo)
 
-    if (error) {
-      console.error('Error posting influencer:', error)
-      throw new Error('failed to post influencer')
-    }
-  }
+  //   if (error) {
+  //     console.error('Error posting influencer:', error)
+  //     throw new Error('failed to post influencer')
+  //   }
+  // }
 
   const onSubmit = handleSubmit(async () => {
     const influencer: Influencer = {
@@ -86,10 +77,7 @@ const page = () => {
     };
 
     try {
-      await decreaseStock(
-        getValues('selectedTimeslot'),
-        getValues('numberOfAttendees')
-      )
+      await decreaseStock(getValues('selectedTimeslot'), getValues('numberOfAttendees'))
       await postInfluencer(influencer)
 
       router.push('/server-form-sample/invitation/thanks')

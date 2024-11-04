@@ -9,6 +9,16 @@ export default function Home() {
         <p className="flex justify-center py-4 hover:underline">Server Side Rendering</p>
       </Link> */}
 
+      <div className="flex flex-row gap-8 items-center justify-center min-h-[50vh]">
+        <div className="bg-purple-200 w-1/4">
+          画像
+        </div>
+        <div className="bg-teal-200 w-3/4">
+          <h2>のむらあすか</h2>
+          <p>プロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキストプロフィールテキスト</p>
+        </div>
+      </div>
+
       <div className="grid grid-cols-3 gap-4">
         <Link href="/client-form-sample">
           <div className="bg-gray-100 p-4 h-32">

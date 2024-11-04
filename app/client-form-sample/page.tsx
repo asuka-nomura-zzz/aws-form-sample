@@ -1,10 +1,10 @@
 'use client'
 
-import Form from './components/Form';
+import Form from '../components/Form';
 
 const page = () => {
   return (
-    <div>
+    <div className="max-w-3xl mx-auto">
       <Form />
     </div>
   )

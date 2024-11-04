@@ -1,26 +1,14 @@
-import React from 'react'
-import { supabase } from '../lib/createClient'
-import { AppWrapper } from './context/useAppContext'
+'use client'
 
-const Layout = async ({children}: any) => {
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormData, formSchema } from '../types/FormData';
 
-  const { data } = await supabase
-    .from('timeslots')
-    .select()
-    .gt('stock', 0)
-    .order('id')
-    
-  const timeslots = (data ?? []).map(item => ({
-    id: item.id as number,
-    name: item.name as string,
-    stock: item.stock as number,
-  }));
+export default function Layout({ children }: {children: React.ReactNode}) {
+  const methods = useForm<FormData>({
+    mode: 'onChange',
+    resolver: zodResolver(formSchema),
+  });
 
-  return (
-    <AppWrapper timeslots={timeslots}>
-      {children}
-    </AppWrapper>
-  )
+  return <FormProvider {...methods}>{children}</FormProvider>
 }
-
-export default Layout
