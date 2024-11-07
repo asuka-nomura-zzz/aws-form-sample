@@ -1,4 +1,4 @@
-const URL = process.env.NEXT_PUBLIC_API_ENDPOINT
+const URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export async function decreaseStockOnAWS(id: string, decreaseBy: number) {
   try {
@@ -7,13 +7,19 @@ export async function decreaseStockOnAWS(id: string, decreaseBy: number) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ decreaseBy: decreaseBy }),
+      body: JSON.stringify({ id: Number(id), decreaseBy: Number(decreaseBy) }),
     });
 
+    const responseData = await response.json();
+
+    console.log('Response Status:', response.status);
+    console.log('Response Body:', responseData);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}, Message: ${responseData.message}`);
     }
-    console.log('decrease succeeded')
+
+    console.log('decrease succeeded');
   } catch (error) {
     console.error('An error occurred:', error);
   }

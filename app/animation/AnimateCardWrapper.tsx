@@ -23,12 +23,15 @@ export const AnimateCardWrapper = ({
 {className?: string, 
   children: ReactNode
 }) => {
-  <motion.div
-    variants={container}
-    initial="hidden"
-    whileInView="show"
-    className={`${className}`}
-  >
-    {children}
-  </motion.div>
+
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      className={`${className}`}
+    >
+      {children}
+    </motion.div>
+  )
 }

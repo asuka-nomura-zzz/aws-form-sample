@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import { useState } from "react";
-
+import { AnimateCardWrapper } from "./animation/AnimateCardWrapper";
+import Animate from "./animation/Animate";
+import { motion } from "framer-motion"
 
 type Work = {
   id: number;
@@ -16,37 +18,55 @@ type Work = {
 
 const works: Work[] = [
   {
-    id: 1, 
-    title: '【1回目】クライアント側でuseEffect、useStateを用いた簡易的な応募フォーム', 
-    stacks: ['React', 'Next.js', 'Tailwind CSS', 'Supabase'], 
-    text: 'インフルエンサーイベントへの招待状サイト。当初はGoogleフォームを用いて簡易的にインフルエンサーへ希望時間の聞き取りをやる予定とのことだったが、5つに分かれているそれぞれの時間帯は、それぞれ参加数の上限があるため、上限にひっかからないように枠の在庫の制御を行う必要があった。そのため、ECサイトのように在庫データと連動させた応募フォームを作成する必要があり、依頼があった。開発時間は極めて短く、数日間のみ。データベースにSupabaseを使用。ReactのuseEffect関数でページレンダリングの際にバックエンドから在庫数を取得して、フロント側でレンダリングするという仕組みで開発をした。', 
+    id: 1,
+    title: '【1回目】クライアント側でuseEffect、useStateを用いた簡易的な応募フォーム',
+    stacks: ['React', 'Next.js', 'Tailwind CSS', 'Supabase'],
+    text: 'インフルエンサーイベントへの招待状サイト。当初はGoogleフォームを用いて簡易的にインフルエンサーへ希望時間の聞き取りをやる予定とのことだったが、5つに分かれているそれぞれの時間帯は、それぞれ参加数の上限があるため、上限にひっかからないように枠の在庫の制御を行う必要があった。そのため、ECサイトのように在庫データと連動させた応募フォームを作成する必要があり、依頼があった。開発時間は極めて短く、数日間のみ。データベースにSupabaseを使用。ReactのuseEffect関数でページレンダリングの際にバックエンドから在庫数を取得して、フロント側でレンダリングするという仕組みで開発をした。',
     url: '/client-form-sample',
     workDate: '2024.3',
     workPeriod: '3日間',
   },
   {
-    id: 2, 
-    title: '【2回目】zod、React Hook Formを用いて、サーバーコンポーネントでデータを取得するようにした応募フォーム', 
-    stacks: ['React', 'Next.js', 'Tailwind CSS', 'Supabase'], 
-    text: '前回の案件の続きの案件。前回の反省から、フロント側での型のバリデーションを厳密にするため、zod、React Hook Formを使用。クライアント側でuseEffectでデータを取得するのではなく、あらかじめサーバーコンポーネント側でデータフェッチする仕組みに変更。フォーム送信前とフォーム送信後の確認画面も作成した。SupabaseではRLS(Row Level Security)を用いて、データの読み書きの安全性を高めた。', 
+    id: 2,
+    title: '【2回目】zod、React Hook Formを用いて、サーバーコンポーネントでデータを取得するようにした応募フォーム',
+    stacks: ['React', 'Next.js', 'Tailwind CSS', 'Supabase'],
+    text: '前回の案件の続きの案件。前回の反省から、フロント側での型のバリデーションを厳密にするため、zod、React Hook Formを使用。クライアント側でuseEffectでデータを取得するのではなく、あらかじめサーバーコンポーネント側でデータフェッチする仕組みに変更。フォーム送信前とフォーム送信後の確認画面も作成した。SupabaseではRLS(Row Level Security)を用いて、データの読み書きの安全性を高めた。',
     url: '/server-form-sample',
     workDate: '2024.6',
     workPeriod: '2週間',
   },
   {
-    id: 3, 
-    title: '【3回目】AWSのAPI Gateway、Lambda、DynamoDBを用いて洗練させた応募フォーム', 
-    stacks: ['React', 'Next.js', 'Tailwind CSS', 'API Gateway', 'Lambda', 'DynamoDB'], 
-    text: '前回、前々回のフォームの続きの案件。前回までの仕事が好評だったため、大手シューズブランドが関わるより規模の大きいインフルエンサー招待イベントのフォーム開発を担当。大手シューズブランドのセキュリティ要件を満たすため、バックエンド側をAWSのサーバーレスアーキテクチャで構築。通信時の暗号化としてはデフォルトでHTTPSのみを受け付けるAPI Gatewayでエンドポイントを作成し、保管時の暗号化にはデフォルトで暗号化が行われるDynamoDBを使用。当初はPostgreSQLを用いるためにAurora Serverlessを検討していたが、コスト増の懸念があったため、Key-value型のDynamoDBを採用した。', 
+    id: 3,
+    title: '【3回目】AWSのAPI Gateway、Lambda、DynamoDBを用いて洗練させた応募フォーム',
+    stacks: ['React', 'Next.js', 'Tailwind CSS', 'API Gateway', 'Lambda', 'DynamoDB'],
+    text: '前回、前々回のフォームの続きの案件。前回までの仕事が好評だったため、大手シューズブランドが関わるより規模の大きいインフルエンサー招待イベントのフォーム開発を担当。大手フォットウェアブランドのセキュリティ要件を満たすため、バックエンド側をAWSのサーバーレスアーキテクチャで構築。通信時の暗号化としてはデフォルトでHTTPSのみを受け付けるAPI Gatewayでエンドポイントを作成し、保管時の暗号化にはデフォルトで暗号化が行われるDynamoDBを使用。当初はPostgreSQLを用いるためにAurora Serverlessを検討していたが、コスト増の懸念があったため、Key-value型のDynamoDBを採用した。',
     url: '/aws-form-sample',
     workDate: '2024.8',
     workPeriod: '1週間',
   }
 ]
 
+const WorkCard = ({ work }: { work: Work }) => {
+  return (
+    <motion.div key={work.id} whileHover={{ scale: 1.05 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+      <Link href={work.url}>
+        <div className="bg-gray-100 p-4">
+          <div className="flex flex-row flex-wrap items-center justify-center h-16">
+            {work.stacks.map((stack, i) => (
+              <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
+            ))}
+          </div>
+          <h3 className="font-bold h-24">{work.title}</h3>
+          <small>{work.workDate}</small><br />
+          <small>{work.workPeriod}</small>
+        </div>
+      </Link>
+    </motion.div>
+  )
+};
 
 export default function Home() {
-  
+
   const allStacks = ['すべて', 'React', 'Next.js', 'Tailwind CSS', 'API Gateway', 'Lambda', 'DynamoDB']
 
   // filtered works by technology stack used
@@ -107,144 +127,61 @@ export default function Home() {
       ))}
 
       {selected === 'すべて' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {works.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'React' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {reactWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'Next.js' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {nextWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'Tailwind CSS' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {tailwindWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'API Gateway' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {apiGatewayWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'Lambda' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {lambdaWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
 
       {selected === 'DynamoDB' &&
-        <div className="grid grid-cols-3 gap-4">
+        <AnimateCardWrapper className="grid grid-cols-3 gap-4">
           {dynamoDBWorks.map((work) => (
-            <Link key={work.id} href={work.url}>
-              <div className="bg-gray-100 p-4">
-                <div className="flex flex-row flex-wrap items-center justify-center h-16">
-                  {work.stacks.map((stack, i) => (
-                    <span key={i} className="text-xs bg-blue-500 text-white p-1 mx-1 my-1 rounded">{stack}</span>
-                  ))}
-                </div>
-                <h3 className="font-bold h-24">{work.title}</h3>
-                {/* <p className="text-sm">{work.text}</p> */}
-                <small>{work.workDate}</small><br/>
-                <small>{work.workPeriod}</small>
-              </div>
-            </Link>
+            <WorkCard key={work.id} work={work} />
           ))}
-        </div>
+        </AnimateCardWrapper>
       }
+
     </>
   );
 }

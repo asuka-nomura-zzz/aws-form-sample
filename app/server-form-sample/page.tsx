@@ -25,9 +25,7 @@ const page = () => {
 
   return (
     <>
-      <section>
-        <h2>ここはサーバー側でデータ取得をするようにしています。</h2>
-      </section>
+      <h2>ここはサーバー側でデータ取得をするようにしています。</h2>
       <form onSubmit={onSubmit}>
         <label>名前</label>
         <input

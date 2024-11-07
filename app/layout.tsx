@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { supabase } from "./lib/createClient";
 import { AppWrapper } from "./hooks/useAppContext";
 import { getTimeslots } from "./utils/getTimeslots";
 import { getTimeslotsFromAws } from "./utils/getTimeslotsFromAws";
