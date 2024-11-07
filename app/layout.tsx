@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description:  'イベント集客フォームサンプル',
 };
 
+export const revalidate = 0;
+
 export default async function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   const fetchedData = await getTimeslots();
     

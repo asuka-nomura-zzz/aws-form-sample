@@ -6,8 +6,10 @@ import { useFormContext } from 'react-hook-form'
 import Link from 'next/link'
 // import { supabase } from '@/app/lib/createClient'
 import { Influencer } from '@/app/types/Influencer'
-import { postInfluencer } from '@/app/utils/postInfluencer'
-import { decreaseStock } from '@/app/utils/decreaseStock'
+// import { postInfluencer } from '@/app/utils/postInfluencer'
+// import { decreaseStock } from '@/app/utils/decreaseStock'
+import { postInfluencerToAws } from '@/app/utils/postInfluencerToAws'
+import { decreaseStockOnAWS } from '@/app/utils/decreaseStockOnAws'
 
 const page = () => {
   const router = useRouter()
@@ -77,14 +79,17 @@ const page = () => {
     };
 
     try {
-      await decreaseStock(getValues('selectedTimeslot'), getValues('numberOfAttendees'))
-      await postInfluencer(influencer)
+      await decreaseStockOnAWS(
+        getValues('selectedTimeslot'), // string
+        Number(getValues('numberOfAttendees')) // number
+        ),
+      // await postInfluencerToAws(influencer)
 
-      router.push('/server-form-sample/thanks')
+      router.push('/aws-form-sample/thanks')
       reset()
     } catch (error) {
       console.error('An error occurred during submission:', error)
-      router.push('/server-form-sample/error')
+      router.push('/aws-form-sample/error')
     }
   })
 

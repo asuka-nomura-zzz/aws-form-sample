@@ -20,7 +20,7 @@ const page = () => {
   const [numberOfAttendees, setNumberOfAttendees] = useState<string>('0')
 
   const onSubmit = handleSubmit(async () => {
-    router.push("/server-form-sample/invitation/confirm")
+    router.push('/server-form-sample/confirm')
   })
 
   return (
