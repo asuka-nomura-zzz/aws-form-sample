@@ -4,6 +4,8 @@ import { getTimeslots } from "./utils/getTimeslots";
 import { getTimeslotsFromAws } from "./utils/getTimeslotsFromAws";
 import "./globals.css";
 import { Timeslot } from "./types/Timeslot";
+import { Influencer } from "./types/Influencer";
+import { getInfluencersFromAws } from "./utils/getInfluencers";
 
 export const metadata: Metadata = {
   title: 'イベント集客フォーム',
@@ -22,9 +24,10 @@ export default async function RootLayout({children}: Readonly<{children: React.R
   }));
 
   const timeslotsFromAws: Timeslot[] = await getTimeslotsFromAws()
+  const influencersFromAws: Influencer[] = await getInfluencersFromAws()
 
   return (
-    <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws}>
+    <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws} influencersFromAws={influencersFromAws}>
       <html lang="ja">
         <body className="bg-gray-100">
           <div className="max-w-7xl min-h-44 mx-10 my-10 xl:mx-auto p-6 bg-white shadow-lg">
