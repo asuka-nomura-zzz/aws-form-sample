@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { AppWrapper } from "./hooks/useAppContext";
+import "./globals.css";
+import { Toaster } from "react-hot-toast";
+
 import { getTimeslots } from "./utils/getTimeslots";
 import { getTimeslotsFromAws } from "./utils/getTimeslotsFromAws";
-import "./globals.css";
 import { Timeslot } from "./types/Timeslot";
 import { Influencer } from "./types/Influencer";
 import { getInfluencersFromAws } from "./utils/getInfluencers";
@@ -34,6 +36,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
             <h1 className="p-3 text-center font-bold text-2xl">イベント集客フォーム</h1>
             {children}
           </div>
+          <Toaster position="bottom-center" reverseOrder={false} />
         </body>
       </html>
     </AppWrapper>

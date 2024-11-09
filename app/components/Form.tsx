@@ -34,6 +34,7 @@ const Form = () => {
     event.preventDefault()
 
     let influencer: Influencer = {
+      id: '',
       full_name: fullName,
       kana_name: kanaName,
       email: email,

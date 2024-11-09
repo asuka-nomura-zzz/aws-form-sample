@@ -14,6 +14,7 @@ const page = () => {
 
   const onSubmit = handleSubmit(async () => {
     const influencer: Influencer = {
+      id: '',
       full_name: getValues('fullName'),
       kana_name: getValues('kanaName'),
       email: getValues('email'),
