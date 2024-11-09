@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CheckboxInput from "../components/CheckboxInput";
+import CheckboxInput from "../client-form-sample/components/CheckboxInput";
 
 describe('CheckboxInput Test', () => {
   const mockOnChange = jest.fn();

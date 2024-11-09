@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import CompanionInputs from "../components/CompanionInputs";
+import CompanionInputs from "../client-form-sample/components/CompanionInputs";
 
 describe('CompanionInputs Component', () => {
   const mockSetFirstName = jest.fn();

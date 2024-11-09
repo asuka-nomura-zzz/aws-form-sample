@@ -4,11 +4,11 @@ import SelectInput from './SelectInput';
 import CheckboxInput from './CheckboxInput';
 import CompanionInputs from './CompanionInputs';
 import TimeslotSelect from './TimeslotSelect';
-import { Timeslot } from '../types/Timeslot';
-import { Influencer } from '../types/Influencer';
-import { postInfluencer } from '../utils/postInfluencer';
-import { decreaseStock } from '../utils/decreaseStock';
-import { getTimeslots } from '../utils/getTimeslots';
+import { Timeslot } from '../../types/Timeslot';
+import { Influencer } from '../../types/Influencer';
+import { postInfluencer } from '../../utils/postInfluencer';
+import { decreaseStock } from '../../utils/decreaseStock';
+import { getTimeslots } from '../../utils/getTimeslots';
 import Link from 'next/link';
 
 const Form = () => {

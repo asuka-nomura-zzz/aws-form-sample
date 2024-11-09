@@ -1,6 +1,6 @@
 import React from 'react';
 import SelectInput from './SelectInput';
-import { Timeslot } from '../types/Timeslot';
+import { Timeslot } from '../../types/Timeslot';
 
 type TimeslotSelectProps = {
   timeslots: Timeslot[];

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import SelectInput from '../components/SelectInput';
+import SelectInput from '../client-form-sample/components/SelectInput';
 
 describe('SelectInput Component', () => {
   const mockOnChange = jest.fn();

@@ -27,7 +27,7 @@ const page = () => {
     <>
       <h2>ここはサーバー側でデータ取得をするようにしています。</h2>
       <form onSubmit={onSubmit}>
-        <label>名前</label>
+        <label>お名前</label>
         <input
           type="text"
           className={clsx(
@@ -38,7 +38,7 @@ const page = () => {
         />
         <p className="text-red-500 text-xs italic">{errors.fullName?.message}</p>
 
-        <label>読み仮名</label>
+        <label>かな</label>
         <input
           type="text"
           className={clsx(

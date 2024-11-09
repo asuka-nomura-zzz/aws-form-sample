@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import FormInput from "../components/FormInput";
+import FormInput from "../client-form-sample/components/FormInput";
 
 describe('FormInput Component', () => {
   it('confirms that there is an accessible name in the rendering result', () => {

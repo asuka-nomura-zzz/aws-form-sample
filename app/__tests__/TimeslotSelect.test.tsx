@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import TimeslotSelect from "../components/TimeslotSelect";
+import TimeslotSelect from "../client-form-sample/components/TimeslotSelect";
 import { Timeslot } from "../types/Timeslot";
 
 describe('TimeslotSelect Component', () => {
