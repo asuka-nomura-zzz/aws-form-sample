@@ -91,7 +91,7 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
+    <div className="min-h-screen p-8">
       <h1 className="text-2xl text-center font-semibold text-gray-800 mb-6">
         管理画面
       </h1>
