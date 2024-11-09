@@ -26,6 +26,7 @@ const page = () => {
   return (
     <>
       <h2>靴ブランドによるインフルエンサー招待イベントのための参加登録フォーム</h2>
+      <Link href="/aws-form-sample/admin">adminページ</Link>
       <form onSubmit={onSubmit}>
         <label>名前</label>
         <input

@@ -44,7 +44,7 @@ const EditTimeslotForm: React.FC<EditTimeslotFormProps> = ({ timeslot, onSubmit,
         <h2 className="text-xl font-semibold mb-4">時間帯と残り枠を編集</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label>Name</label>
+            <label>時間帯</label>
             <input
               type="text"
               name="name"
@@ -54,7 +54,7 @@ const EditTimeslotForm: React.FC<EditTimeslotFormProps> = ({ timeslot, onSubmit,
             />
           </div>
           <div className="mb-4">
-            <label>Stock</label>
+            <label>枠の残り数</label>
             <input
               type="number"
               name="stock"

@@ -109,7 +109,7 @@ const AdminPage = () => {
                 かな
               </th>
               <th className="border border-gray-200 px-4 py-2 text-left text-xs">
-                Email
+                Eメールアドレス
               </th>
               <th className="border border-gray-200 px-4 py-2 text-left text-xs w-[150px]">
                 生年月日
@@ -118,7 +118,7 @@ const AdminPage = () => {
                 出席
               </th>
               <th className="border border-gray-200 px-4 py-2 text-left text-xs">
-                時間帯
+                参加時間帯
               </th>
               <th className="border border-gray-200 px-4 py-2 text-left text-xs">
                 参加人数

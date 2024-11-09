@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Influencer } from '@/app/types/Influencer'
+import { Timeslot } from '@/app/types/Timeslot'
 
 type EditFormProps = {
   influencer: Influencer
-  timeslots: any[]
+  timeslots: Timeslot[]
   onSubmit: (updatedData: Influencer) => void
   onClose: () => void
 }
@@ -45,7 +46,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
         <h2 className="text-xl font-semibold mb-4">インフルエンサーを編集</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label>Full Name</label>
+            <label>お名前</label>
             <input
               type="text"
               name="full_name"
@@ -55,7 +56,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
             />
           </div>
           <div className="mb-4">
-            <label>Kana Name</label>
+            <label>かな</label>
             <input
               type="text"
               name="kana_name"
@@ -65,7 +66,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
             />
           </div>
           <div className="mb-4">
-            <label>Email</label>
+            <label>Eメールアドレス</label>
             <input
               type="email"
               name="email"
@@ -75,7 +76,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
             />
           </div>
           <div className="mb-4">
-            <label>Birthdate</label>
+            <label>生年月日</label>
             <input
               type="date"
               name="birthdate"
@@ -85,7 +86,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
             />
           </div>
           <div className="mb-4">
-            <label>Timeslot</label>
+            <label>参加時間帯</label>
             <select
               name="timeslot"
               value={formData.timeslot}
@@ -100,11 +101,31 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
             </select>
           </div>
           <div className="mb-4">
-            <label>Number of Attendees</label>
+            <label>参加人数</label>
             <input
               type="number"
               name="number_of_attendees"
               value={formData.number_of_attendees}
+              onChange={handleChange}
+              className="w-full border p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label>1人目の同行者様</label>
+            <input
+              type="text"
+              name="first_companion_name"
+              value={formData.first_companion_name}
+              onChange={handleChange}
+              className="w-full border p-2"
+            />
+          </div>
+          <div className="mb-4">
+            <label>2人目の同行者様</label>
+            <input
+              type="text"
+              name="second_companion_name"
+              value={formData.second_companion_name}
               onChange={handleChange}
               className="w-full border p-2"
             />
