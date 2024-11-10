@@ -1,7 +1,9 @@
 import { z } from 'zod'
 
 export const formSchema = z.object({
+  /* eslint-disable no-irregular-whitespace */
   fullName: z.string().regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" }).min(1, { message: "フルネーム（スペースなし）でお名前を入力してください" }),
+  /* eslint-enable no-irregular-whitespace */
   kanaName: z.string().regex(/^[\u3040-\u309F]+$/, { message: "ひらがな（スペースなし）で入力してください"}),
   email: z.string().regex(/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/, {
     message: "メールアドレスを入力してください"

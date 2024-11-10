@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client'
 
 import React from 'react'
@@ -30,8 +31,7 @@ const Page = () => {
         getValues('selectedTimeslot'),
         Number(getValues('numberOfAttendees'))
       ),
-        await postInfluencerToAws(influencer)
-
+      await postInfluencerToAws(influencer)
       router.push('/aws-form-sample/thanks')
       reset()
     } catch (error) {
