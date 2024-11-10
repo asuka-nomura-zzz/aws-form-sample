@@ -34,8 +34,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws} influencersFromAws={influencersFromAws} >
       <html lang="ja">
-        <body className="">
-          <div className="max-w-5xl mx-auto min-h-screen mx-10 my-10 xl:mx-auto p-6 bg-white">
+        <body>
+          <div className="max-w-5xl mx-auto min-h-screen my-10 xl:mx-auto p-6 bg-white">
             <Link href="/"><h1 className="p-3 text-center font-bold text-2xl mb-16">Asuka Nomura's Work Sample</h1></Link>
             {children}
           </div>

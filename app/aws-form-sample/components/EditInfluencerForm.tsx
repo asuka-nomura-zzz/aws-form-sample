@@ -43,7 +43,7 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
 
     try {
       await updateInfluencerOnAws(
-        formData.id,  // formData.id を渡す
+        formData.id,
         formData.full_name,
         formData.kana_name,
         formData.email,
@@ -55,16 +55,15 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
         formData.second_companion_name
       );
     } catch(error) {
-
+      console.log(error)
     }
     onSubmit(formData)
     onClose()
   }
 
-  // モーダル外をクリックしたときにモーダルを閉じる処理
   const handleOutsideClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).id === "modal-background") {
-      onClose() // モーダルを閉じる
+      onClose()
     }
   }
 
