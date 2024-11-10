@@ -9,6 +9,8 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import { Timeslot } from "@/app/types/Timeslot";
 import toast from "react-hot-toast";
 import { InfluencerWithId } from "@/app/types/InfluencerWithId";
+import { updateTimeslotOnAws } from "@/app/utils/updateTimeslotOnAws";
+
 const URL = process.env.NEXT_PUBLIC_API_ENDPOINT
 
 
@@ -44,28 +46,31 @@ const AdminPage = () => {
     }
   };
 
-  const handleTimeslotEditSubmit = async (updatedData: any) => {
+  const handleTimeslotEditSubmit = async () => {
     try {
-      const response = await fetch(`${URL}/timeslots/${updatedData.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
-      });
+      // const response = await fetch(`${URL}/timeslots/${updatedData.id}`, {
+      //   method: "PUT",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(updatedData),
+      // });
 
-      if (response.ok) {
-        alert("Timeslot data updated successfully!");
-      } else {
-        alert("Failed to update timeslot data");
-      }
+      // if (response.ok) {
+      //   alert("Timeslot data updated successfully!");
+      // } else {
+      //   alert("Failed to update timeslot data");
+      // }
 
+      //動いている、後で変数で渡す
+      await updateTimeslotOnAws("3", "this is updated", 300)
 
-      console.log('update succeeded') // for mock
+      // console.log('update succeeded') // for mock
       toast.success("timeslot data updated successfully!")
     } catch (error) {
       console.error("Error updating timeslot:", error)
       toast.success('Failed to update timeslot data')
     }
   };
+
 
   // Influencerの削除処理
   const handleDeleteInfluencer = (id: string) => {

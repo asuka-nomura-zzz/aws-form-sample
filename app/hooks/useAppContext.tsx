@@ -46,8 +46,8 @@ export const AppWrapper: FC<PropsWithChildren<{
 
     fetchTimeslotsAndInfluencers()
 
-    // data update once every 20 seconds
-    const intervalId = setInterval(fetchTimeslotsAndInfluencers, 20000)
+    // data update once every 300 seconds
+    const intervalId = setInterval(fetchTimeslotsAndInfluencers, 300000)
     return () => clearInterval(intervalId)
   }, [])
 
