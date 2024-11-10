@@ -25,6 +25,7 @@ export const formSchema = z.object({
   isAttend: z.boolean(),
   selectedTimeslot: z.coerce.number().min(0).max(5),
   numberOfAttendees: z.coerce.number().min(0).max(3),
+  /* eslint-disable no-irregular-whitespace */
   firstCompanionName: z.string()
   .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
   .min(1, { message: "姓と名を入力してください" }),
@@ -32,6 +33,7 @@ export const formSchema = z.object({
     .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
     .min(1, { message: "姓と名を入力してください" }),
   })
+  /* eslint-enable no-irregular-whitespace */
 .refine(
   (data) => {
     if (data.isAttend) {
