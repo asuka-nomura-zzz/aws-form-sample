@@ -27,7 +27,7 @@ const Form = () => {
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    let influencer: Influencer = {
+    const influencer: Influencer = {
       full_name: fullName,
       kana_name: kanaName,
       email: email,

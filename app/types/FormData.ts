@@ -6,7 +6,6 @@ export const formSchema = z.object({
   email: z.string().regex(/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/, {
     message: "メールアドレスを入力してください"
   }),
-  // birthdate: z.coerce.date().min(new Date("1950-01-01"), { message: "生年月日を入力してください。"}).max(new Date("2010-01-01"), { message: "生年月日を入力してください。"}),
   birthdate: z
   .string()
   .nullable()
@@ -26,9 +25,13 @@ export const formSchema = z.object({
   isAttend: z.boolean(),
   selectedTimeslot: z.coerce.number().min(0).max(5),
   numberOfAttendees: z.coerce.number().min(0).max(3),
-  firstCompanionName: z.string().regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" }).min(0),
-  secondCompanionName: z.string().regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" }).min(0),
-})
+  firstCompanionName: z.string()
+  .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
+  .min(1, { message: "姓と名を入力してください" }),
+  secondCompanionName: z.string()
+    .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
+    .min(1, { message: "姓と名を入力してください" }),
+  })
 .refine(
   (data) => {
     if (data.isAttend) {
