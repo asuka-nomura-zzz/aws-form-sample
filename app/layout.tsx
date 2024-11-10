@@ -13,8 +13,8 @@ import { InfluencerWithId } from "./types/InfluencerWithId";
 
 
 export const metadata: Metadata = {
-  title: 'イベント集客フォーム',
-  description: 'イベント集客フォームサンプル',
+  title: 'Asuka Nomura Work Smaple',
+  description: 'Asuka Nomura Work Smaple',
 };
 
 export const revalidate = 0;
@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <html lang="ja">
         <body>
           <div className="max-w-5xl mx-auto min-h-screen my-10 xl:mx-auto p-6 bg-white">
-            <Link href="/"><h1 className="p-3 text-center font-bold text-2xl mb-16">Asuka Nomura&aposs Work Sample</h1></Link>
+            <Link href="/"><h1 className="p-3 text-center font-bold text-2xl mb-16">Asuka Nomura&apos;s Work Sample</h1></Link>
             {children}
           </div>
           <Toaster position="bottom-center" reverseOrder={false} />
