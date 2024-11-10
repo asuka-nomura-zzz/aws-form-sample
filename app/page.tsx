@@ -137,13 +137,21 @@ export default function Home() {
         <p className="flex justify-center py-4 hover:underline">Server Side Rendering</p>
       </Link> */}
 
-      <div className="flex flex-row gap-8 items-center justify-center my-16">
+      <div className="flex flex-row gap-8 items-center justify-center mb-8">
         <div className="">
           <small>のむら あすか</small>
-          <h2 className="text-2xl font-semibold">野村 愛朱歌</h2>
+          <h2 className="text-2xl font-semibold">野村 愛朱歌<span className="ml-4 font-semibold text-sm">Asuka Nomura</span></h2>
           <p className="mt-4">フロントエンドエンジニアで、React、Next.jsやAWSのサーバーレスフレームワークを得意としています。</p>
         </div>
       </div>
+
+      <h3 className="font-bold text-xl mb-4">Certifications</h3>
+      <ul className="list-disc mb-8">
+        <li className="ml-4">TOEIC 830点  取得<span className="ml-6 text-sm">2022年</span></li>
+        <li className="ml-4">宅地建物取引士試験  合格<span className="ml-6 text-sm">2023年</span></li>
+        <li className="ml-4">AWS Certified Solutions Architect - Associates  取得<span className="ml-6 text-sm">2024年</span></li>
+        <li className="ml-4">LPIC-1  取得<span className="ml-6 text-sm">2024年</span></li>
+      </ul>
 
       <h3 className="font-bold text-xl mb-4">Works</h3>
 
