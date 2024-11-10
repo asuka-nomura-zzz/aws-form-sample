@@ -9,6 +9,7 @@ import { Timeslot } from "./types/Timeslot";
 import { Influencer } from "./types/Influencer";
 import { getInfluencersFromAws } from "./utils/getInfluencers";
 import Link from "next/link";
+import { InfluencerWithId } from "./types/InfluencerWithoutId";
 
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default async function RootLayout({children}: Readonly<{children: React.R
   }));
 
   const timeslotsFromAws: Timeslot[] = await getTimeslotsFromAws()
-  const influencersFromAws: Influencer[] = await getInfluencersFromAws()
+  const influencersFromAws: InfluencerWithId[] = await getInfluencersFromAws()
 
   return (
     <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws} influencersFromAws={influencersFromAws}>

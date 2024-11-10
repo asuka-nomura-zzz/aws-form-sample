@@ -5,11 +5,12 @@ import { Timeslot } from '@/app/types/Timeslot';
 import { getTimeslotsFromAws } from '../utils/getTimeslotsFromAws';
 import { Influencer } from '../types/Influencer';
 import { getInfluencersFromAws } from '../utils/getInfluencers';
+import { InfluencerWithId } from '../types/InfluencerWithoutId';
 
 export const AppContext = createContext<{
   timeslots: Timeslot[],
   timeslotsFromAws: Timeslot[],
-  influencersFromAws: Influencer[],
+  influencersFromAws: InfluencerWithId[],
 
   //for ISR
   refreshTimeslots: () => void,
@@ -25,13 +26,13 @@ export const AppContext = createContext<{
 export const AppWrapper: FC<PropsWithChildren<{
   timeslots: Timeslot[],
   timeslotsFromAws: Timeslot[]
-  influencersFromAws: Influencer[]
+  influencersFromAws: InfluencerWithId[]
 }>> = ({ timeslots, timeslotsFromAws, influencersFromAws, children }) => {
 
   //for ISR
   const [timeslotsState, setTimeslotsState] = useState<Timeslot[]>(timeslots)
   const [timeslotsFromAwsState, setTimeslotsFromAwsState] = useState<Timeslot[]>(timeslotsFromAws)
-  const [influencersFromAwsState, setInfluencersFromAwsState] = useState<Influencer[]>(influencersFromAws)
+  const [influencersFromAwsState, setInfluencersFromAwsState] = useState<InfluencerWithId[]>(influencersFromAws)
 
   //for ISR
   useEffect(() => {

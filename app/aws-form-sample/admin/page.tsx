@@ -5,15 +5,16 @@ import React, { useState } from "react";
 import EditInfluencerForm from "../components/EditInfluencerForm";
 import EditTimeslotForm from "../components/EditTimeslotForm";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
-import { Influencer } from "@/app/types/Influencer";
+// import { Influencer } from "@/app/types/Influencer";
 import { Timeslot } from "@/app/types/Timeslot";
 import toast from "react-hot-toast";
+import { InfluencerWithId } from "@/app/types/InfluencerWithoutId";
 
 const AdminPage = () => {
   const { timeslotsFromAws: timeslots, influencersFromAws: influencers } =
     useAppContext();
   const [selectedInfluencer, setSelectedInfluencer] =
-    useState<Influencer | null>(null);
+    useState<InfluencerWithId | null>(null);
   const [selectedTimeslot, setSelectedTimeslot] = useState<Timeslot | null>(
     null
   );

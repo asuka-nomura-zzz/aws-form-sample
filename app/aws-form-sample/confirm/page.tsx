@@ -7,13 +7,14 @@ import Link from 'next/link'
 import { Influencer } from '@/app/types/Influencer'
 import { postInfluencerToAws } from '@/app/utils/postInfluencerToAws'
 import { decreaseStockOnAWS } from '@/app/utils/decreaseStockOnAws'
+import { InfluencerWithId } from '@/app/types/InfluencerWithoutId'
 
 const page = () => {
   const router = useRouter()
   const { getValues, handleSubmit, reset } = useFormContext()
 
   const onSubmit = handleSubmit(async () => {
-    const influencer: Influencer = {
+    const influencer: InfluencerWithId = {
       id: '',
       full_name: getValues('fullName'),
       kana_name: getValues('kanaName'),

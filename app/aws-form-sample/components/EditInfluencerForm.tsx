@@ -45,53 +45,53 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
       >
         <h2 className="text-xl font-semibold mb-4">インフルエンサーを編集</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label>お名前</label>
+          <div className="mb-2">
+            <label className="text-sm">お名前</label>
             <input
               type="text"
               name="full_name"
               value={formData.full_name}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>かな</label>
+          <div className="mb-2">
+            <label className="text-sm">かな</label>
             <input
               type="text"
               name="kana_name"
               value={formData.kana_name}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>Eメールアドレス</label>
+          <div className="mb-2">
+            <label className="text-sm">Eメールアドレス</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>生年月日</label>
+          <div className="mb-2">
+            <label className="text-sm">生年月日</label>
             <input
               type="date"
               name="birthdate"
               value={formData.birthdate}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>参加時間帯</label>
+          <div className="mb-2">
+            <label className="text-sm">参加時間帯</label>
             <select
               name="timeslot"
               value={formData.timeslot}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border y-1 px-22"
             >
               {timeslots.map((timeslot) => (
                 <option key={timeslot.id} value={timeslot.id}>
@@ -100,34 +100,34 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
               ))}
             </select>
           </div>
-          <div className="mb-4">
-            <label>参加人数</label>
+          <div className="mb-2">
+            <label className="text-sm">参加人数</label>
             <input
               type="number"
               name="number_of_attendees"
               value={formData.number_of_attendees}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>1人目の同行者様</label>
+          <div className="mb-2">
+            <label className="text-sm">1人目の同行者様</label>
             <input
               type="text"
               name="first_companion_name"
               value={formData.first_companion_name}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
-          <div className="mb-4">
-            <label>2人目の同行者様</label>
+          <div className="mb-2">
+            <label className="text-sm">2人目の同行者様</label>
             <input
               type="text"
               name="second_companion_name"
               value={formData.second_companion_name}
               onChange={handleChange}
-              className="w-full border p-2"
+              className="w-full border py-1 px-2"
             />
           </div>
           <div className="flex justify-between">

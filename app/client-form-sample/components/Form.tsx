@@ -15,13 +15,7 @@ const Form = () => {
   const [fullName, setFullName] = useState<string>('')
   const [kanaName, setKanaName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [birthdate, setBirthdate] = useState<string>(
-    new Date(2000, 0, 1)
-    .toLocaleDateString('ja-JP', {
-      year: 'numeric', month: '2-digit', day: '2-digit'
-    })
-    .replaceAll('/', '-')
-  )
+  const [birthdate, setBirthdate] = useState<string>('2000-01-01')
   const [isAttend, setIsAttend] = useState<boolean>(false)
   const [timeslots, setTimeslots] = useState<Timeslot[]>([])
   const [numberOfAttendees, setNumberOfAttendees] = useState<string>('0')
@@ -34,7 +28,6 @@ const Form = () => {
     event.preventDefault()
 
     let influencer: Influencer = {
-      id: '',
       full_name: fullName,
       kana_name: kanaName,
       email: email,
@@ -86,9 +79,7 @@ const Form = () => {
       {isSubmitted ? 
       <>
         <p>送信ありがとうございました</p>
-        <Link href="./">
-          <p className='hover:underline'>TOPへ戻る</p>
-        </Link>
+        <Link href="/" className="hover:underline">TOPへ戻る</Link>
       </>
       :
       <form onSubmit={handleSubmit}>
