@@ -10,12 +10,12 @@ import { Timeslot } from "@/app/types/Timeslot";
 import toast from "react-hot-toast";
 import { InfluencerWithId } from "@/app/types/InfluencerWithId";
 import { updateTimeslotOnAws } from "@/app/utils/updateTimeslotOnAws";
-
-const URL = process.env.NEXT_PUBLIC_API_ENDPOINT
+import { updateInfluencerOnAws } from "@/app/utils/updateInfluencerOnAws";
+import { deleteInfluencerOnAws } from "@/app/utils/deleteInfluencerOnAws";
 
 
 const AdminPage = () => {
-  const { timeslotsFromAws: timeslots, influencersFromAws: influencers } =
+  const { timeslotsFromAws: timeslots, influencersFromAws: influencers, setInfluencers, setTimeslots } =
     useAppContext();
   const [selectedInfluencer, setSelectedInfluencer] =
     useState<InfluencerWithId | null>(null);
@@ -27,47 +27,52 @@ const AdminPage = () => {
 
   const handleInfluencerEditSubmit = async (updatedData: any) => {
     try {
-      // const response = await fetch(`/api/influencers/${updatedData.id}`, {
-      //   method: "PUT",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(updatedData),
-      // });
-
-      // if (response.ok) {
-      //   alert("Influencer data updated successfully!");
-      // } else {
-      //   alert("Failed to update influencer data");
-      // }
+      if (updatedData) {
+        console.log(updatedData); // この行を追加して、idが含まれているか確認します
+        await updateInfluencerOnAws(
+          updatedData.id, 
+          updatedData.full_name, 
+          updatedData.kana_name, 
+          updatedData.email, 
+          updatedData.birthdate, 
+          updatedData.is_attend, 
+          Number(updatedData.timeslot), 
+          updatedData.number_of_attendees || 0, 
+          updatedData.first_companion_name || '', 
+          updatedData.second_companion_name || ''
+        );
+      }
       console.log('influencer edited')
       toast.success('Influencer data updated successfully')
+      const updatedInfluencers = influencers.map((influencer) =>
+        influencer.id === updatedData.id ? { ...influencer, ...updatedData } : influencer
+      );
+      setInfluencers(updatedInfluencers);
     } catch (error) {
       console.error("Error updating influencer:", error);
       toast.success('Failed to update influencer data')
     }
   };
 
-  const handleTimeslotEditSubmit = async () => {
+  const handleTimeslotEditSubmit = async (updatedData: Timeslot) => {
     try {
-      // const response = await fetch(`${URL}/timeslots/${updatedData.id}`, {
-      //   method: "PUT",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(updatedData),
-      // });
-
-      // if (response.ok) {
-      //   alert("Timeslot data updated successfully!");
-      // } else {
-      //   alert("Failed to update timeslot data");
-      // }
-
-      //動いている、後で変数で渡す
-      await updateTimeslotOnAws("3", "this is updated", 300)
-
-      // console.log('update succeeded') // for mock
-      toast.success("timeslot data updated successfully!")
+      if (updatedData) {
+        const timeslotId = updatedData.id;
+        const timeslotName = updatedData.name;
+        const stockCount = updatedData.stock;
+        console.log(timeslotId, timeslotName,stockCount)
+        await updateTimeslotOnAws(String(timeslotId), timeslotName, stockCount);
+        const updatedTimeslots = timeslots.map((timeslot) =>
+          String(timeslot.id) === String(timeslotId)
+            ? { id: timeslotId, name: timeslotName, stock: stockCount }
+            : timeslot
+        );
+        console.log(updatedTimeslots)
+        setTimeslots(updatedTimeslots)
+      }
+      toast.success('タイムスロットが更新されました')
     } catch (error) {
-      console.error("Error updating timeslot:", error)
-      toast.success('Failed to update timeslot data')
+      toast.error('タイムスロットの更新に失敗しました')
     }
   };
 
@@ -82,12 +87,12 @@ const AdminPage = () => {
     if (!deletingInfluencerId) return;
 
     try {
-      // 実際に削除処理を行う
-      // const response = await fetch(`/api/influencers/${deletingInfluencerId}`, {
-      //   method: "DELETE",
-      // });
+      await deleteInfluencerOnAws(deletingInfluencerId);
+      const updatedInfluencers = influencers.filter((timeslot) => {
+        return String(timeslot.id) !== String(deletingInfluencerId)
+      });
+      setInfluencers(updatedInfluencers)
 
-      console.log('delete succeeded');
       toast.success("Influencer deleted successfully!");
       setShowDeleteModal(false);
     } catch (error) {
@@ -103,7 +108,7 @@ const AdminPage = () => {
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-2xl text-center font-semibold text-gray-800 mb-6">
-        管理画面
+        管理画面 <span className="text-sm font-light">※本来はログインでアクセス制御を行います</span>
       </h1>
 
       {/* Influencers */}

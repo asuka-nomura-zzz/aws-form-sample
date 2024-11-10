@@ -1,16 +1,30 @@
 import { useState } from 'react'
-import { Influencer } from '@/app/types/Influencer'
+// import { Influencer } from '@/app/types/Influencer'
+import { InfluencerWithId } from '@/app/types/InfluencerWithId'
 import { Timeslot } from '@/app/types/Timeslot'
+import { updateInfluencerOnAws } from '@/app/utils/updateInfluencerOnAws'
 
 type EditFormProps = {
-  influencer: Influencer
+  influencer: InfluencerWithId | null
   timeslots: Timeslot[]
-  onSubmit: (updatedData: Influencer) => void
+  onSubmit: (updatedData: InfluencerWithId) => void
   onClose: () => void
 }
 
 const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, onSubmit, onClose }) => {
-  const [formData, setFormData] = useState<Influencer>(influencer)
+  const [formData, setFormData] = useState<InfluencerWithId>({
+    id: influencer?.id || '',  // id が必要なので、デフォルト値として空文字を設定
+    created_at: influencer?.created_at || 0,  // created_at はタイムスタンプなので、0 で初期化
+    full_name: influencer?.full_name || '',
+    kana_name: influencer?.kana_name || '',
+    email: influencer?.email || '',
+    birthdate: influencer?.birthdate || '',
+    is_attend: influencer?.is_attend || false,
+    timeslot: influencer?.timeslot || undefined,
+    number_of_attendees: influencer?.number_of_attendees || undefined,
+    first_companion_name: influencer?.first_companion_name || '',
+    second_companion_name: influencer?.second_companion_name || ''
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -20,8 +34,29 @@ const EditInfluencerForm: React.FC<EditFormProps> = ({ influencer, timeslots, on
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!influencer) {
+      return
+    }
+
+    try {
+      await updateInfluencerOnAws(
+        formData.id,  // formData.id を渡す
+        formData.full_name,
+        formData.kana_name,
+        formData.email,
+        formData.birthdate,
+        formData.is_attend,
+        formData.timeslot,
+        formData.number_of_attendees,
+        formData.first_companion_name,
+        formData.second_companion_name
+      );
+    } catch(error) {
+
+    }
     onSubmit(formData)
     onClose()
   }

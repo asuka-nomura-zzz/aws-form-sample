@@ -13,6 +13,9 @@ export const AppContext = createContext<{
   influencersFromAws: InfluencerWithId[],
 
   //for ISR
+  setInfluencers: (influencers: InfluencerWithId[]) => void,
+  setTimeslots: (timeslots: Timeslot[]) => void,
+
   refreshTimeslots: () => void,
 }>({
   timeslots: [],
@@ -20,6 +23,9 @@ export const AppContext = createContext<{
   influencersFromAws: [],
 
   //for ISR
+  setInfluencers: () => {},
+  setTimeslots: () => {},
+
   refreshTimeslots: () => { }
 });
 
@@ -27,6 +33,7 @@ export const AppWrapper: FC<PropsWithChildren<{
   timeslots: Timeslot[],
   timeslotsFromAws: Timeslot[]
   influencersFromAws: InfluencerWithId[]
+  // setInfluencers: (influencers: InfluencerWithId[]) => {},
 }>> = ({ timeslots, timeslotsFromAws, influencersFromAws, children }) => {
 
   //for ISR
@@ -46,10 +53,17 @@ export const AppWrapper: FC<PropsWithChildren<{
 
     fetchTimeslotsAndInfluencers()
 
-    // data update once every 300 seconds
-    const intervalId = setInterval(fetchTimeslotsAndInfluencers, 300000)
+    // data update once every 3600 seconds
+    const intervalId = setInterval(fetchTimeslotsAndInfluencers, 3600000)
     return () => clearInterval(intervalId)
   }, [])
+
+  const setInfluencers = (influencers: InfluencerWithId[]) => {
+    setInfluencersFromAwsState(influencers)
+  }
+  const setTimeslots = (timeslots: Timeslot[]) => {
+    setTimeslotsFromAwsState(timeslots)
+  }
 
   //for ISR
   const refreshTimeslots = () => {
@@ -64,6 +78,8 @@ export const AppWrapper: FC<PropsWithChildren<{
       influencersFromAws: influencersFromAwsState,
 
       //for ISR
+      setInfluencers,
+      setTimeslots,
       refreshTimeslots
     }}>
       {children}

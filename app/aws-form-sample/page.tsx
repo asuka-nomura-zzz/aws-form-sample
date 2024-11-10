@@ -25,8 +25,24 @@ const Page = () => {
 
   return (
     <>
-      <h2>靴ブランドによるインフルエンサー招待イベントのための参加登録フォーム</h2>
-      <Link href="/aws-form-sample/admin">adminページ</Link>
+      <div className="mb-8">
+        <h2 className="font-semibold text-lg mb-2">靴ブランドによるインフルエンサー招待イベントのための参加登録フォーム</h2>
+        <p className="text-sm">大手フットウェアブランドのマーケティングキャンペーンの一環として、インフルエンサーを対象としたイベント応募フォームを開発しました。セキュリティポリシーに基づき、データの転送時および保管時の暗号化が必須要件とされたのでAWSを用いて実装を行いました。こちらは実際の作成したものに似せて改めて作ったものです。</p>
+
+        <h4 className="font-semibold mt-4">ポイント</h4>
+        <ul className="list-disc ml-4 text-sm">
+          <li>セキュリティ要件を満たすため、AWSのAPI Gateway、Lambda、DynamoDBを用いたサーバーレスアーキテクチャを採用</li>
+          <li>Next.jsで構築したフロントエンドからAPI Gatewayで実装したREST APIを介して、LambdaからDynamoDBのテーブルへCRUD操作を行った</li>
+          <li>API GatewayでのHTTPS通信によりSSL/TLS暗号化を行い、転送時のセキュリティを確保</li>
+          <li>DynamoDBによって保管データの暗号化にも対応</li>
+          <li>当初はSupabaseの知見を活かすため、PostgreSQLが使えるAurora Serverlessの利用を検討したが、コストの懸念があったことから、key-value型のDynamoDBを採用</li>
+          <li>運営者側の利便性を考えてAdminページを作成し、そこからCRUD操作をできるようにした</li>
+
+        </ul>
+      </div>
+      <div className="text-right my-8">
+        <Link href="/aws-form-sample/admin" className="underline">adminページ</Link>
+      </div>
       <form onSubmit={onSubmit}>
         <label>名前</label>
         <input

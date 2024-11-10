@@ -32,11 +32,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const influencersFromAws: InfluencerWithId[] = await getInfluencersFromAws()
 
   return (
-    <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws} influencersFromAws={influencersFromAws}>
+    <AppWrapper timeslots={timeslots} timeslotsFromAws={timeslotsFromAws} influencersFromAws={influencersFromAws} >
       <html lang="ja">
-        <body className="bg-gray-100">
-          <div className="max-w-7xl min-h-44 mx-10 my-10 xl:mx-auto p-6 bg-white shadow-lg">
-            <Link href="/"><h1 className="p-3 text-center font-bold text-2xl">イベント集客フォーム</h1></Link>
+        <body className="">
+          <div className="max-w-5xl mx-auto min-h-screen mx-10 my-10 xl:mx-auto p-6 bg-white">
+            <Link href="/"><h1 className="p-3 text-center font-bold text-2xl mb-16">Asuka Nomura's Work Sample</h1></Link>
             {children}
           </div>
           <Toaster position="bottom-center" reverseOrder={false} />

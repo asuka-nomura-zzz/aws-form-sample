@@ -30,10 +30,10 @@ export const formSchema = z.object({
   /* eslint-disable no-irregular-whitespace */
   firstCompanionName: z.string()
   .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
-  .min(1, { message: "姓と名を入力してください" }),
+  .min(0, { message: "姓と名を入力してください" }),
   secondCompanionName: z.string()
     .regex(/^[^ 　]*$/, { message: "姓と名の間にスペースを入れないでください" })
-    .min(1, { message: "姓と名を入力してください" }),
+    .min(0, { message: "姓と名を入力してください" }),
   })
   /* eslint-enable no-irregular-whitespace */
 .refine(
