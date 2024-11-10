@@ -39,7 +39,7 @@ const Page = () => {
 
   return (
     <>
-     <form onSubmit={onSubmit}>
+     <form onSubmit={onSubmit} className="max-w-3xl mx-auto">
       <table className="min-w-full border-collapse border border-gray-300">
         <thead>
           <tr>

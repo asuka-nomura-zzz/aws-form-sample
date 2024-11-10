@@ -2,7 +2,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>error page</div>
+    <div className="max-w-3xl mx-auto">error page</div>
   )
 }
 

@@ -43,7 +43,34 @@ const works: Work[] = [
     url: '/aws-form-sample',
     workDate: '2024.8',
     workPeriod: '1週間',
-  }
+  },
+  {
+    id: 4,
+    title: 'バックエンドを伴うコーポレートサイトの開発（ページ作成中）',
+    stacks: ['Next.js', 'Tailwind CSS', 'ログイン機能', 'Adminページ', 'API Gateway', 'Lambda', 'DynamoDB', 'Cognito'],
+    text: '前回、前々回のフォームの続きの案件。前回までの仕事が好評だったため、大手シューズブランドが関わるより規模の大きいインフルエンサー招待イベントのフォーム開発を担当。大手フォットウェアブランドのセキュリティ要件を満たすため、バックエンド側をAWSのサーバーレスアーキテクチャで構築。通信時の暗号化としてはデフォルトでHTTPSのみを受け付けるAPI Gatewayでエンドポイントを作成し、保管時の暗号化にはデフォルトで暗号化が行われるDynamoDBを使用。当初はPostgreSQLを用いるためにAurora Serverlessを検討していたが、コスト増の懸念があったため、Key-value型のDynamoDBを採用した。',
+    url: '#',
+    workDate: '2024.8',
+    workPeriod: '1週間',
+  },
+  {
+    id: 5,
+    title: 'コスメECサイトのカスタムテーマ開発（ページ作成中）',
+    stacks: ['Next.js', 'Tailwind CSS', 'ログイン機能', 'Adminページ', 'API Gateway', 'Lambda', 'DynamoDB', 'Cognito'],
+    text: '前回、前々回のフォームの続きの案件。前回までの仕事が好評だったため、大手シューズブランドが関わるより規模の大きいインフルエンサー招待イベントのフォーム開発を担当。大手フォットウェアブランドのセキュリティ要件を満たすため、バックエンド側をAWSのサーバーレスアーキテクチャで構築。通信時の暗号化としてはデフォルトでHTTPSのみを受け付けるAPI Gatewayでエンドポイントを作成し、保管時の暗号化にはデフォルトで暗号化が行われるDynamoDBを使用。当初はPostgreSQLを用いるためにAurora Serverlessを検討していたが、コスト増の懸念があったため、Key-value型のDynamoDBを採用した。',
+    url: '#',
+    workDate: '2024.8',
+    workPeriod: '1週間',
+  },
+  {
+    id: 6,
+    title: '社内利用向け請求書登録Webアプリの開発（ページ作成中）',
+    stacks: ['Next.js', 'Tailwind CSS', 'ログイン機能', 'Adminページ', 'API Gateway', 'Lambda', 'DynamoDB', 'Cognito'],
+    text: '前回、前々回のフォームの続きの案件。前回までの仕事が好評だったため、大手シューズブランドが関わるより規模の大きいインフルエンサー招待イベントのフォーム開発を担当。大手フォットウェアブランドのセキュリティ要件を満たすため、バックエンド側をAWSのサーバーレスアーキテクチャで構築。通信時の暗号化としてはデフォルトでHTTPSのみを受け付けるAPI Gatewayでエンドポイントを作成し、保管時の暗号化にはデフォルトで暗号化が行われるDynamoDBを使用。当初はPostgreSQLを用いるためにAurora Serverlessを検討していたが、コスト増の懸念があったため、Key-value型のDynamoDBを採用した。',
+    url: '#',
+    workDate: '2024.8',
+    workPeriod: '1週間',
+  },
 ]
 
 const WorkCard = ({ work }: { work: Work }) => {
@@ -102,7 +129,7 @@ export default function Home() {
 
 
   return (
-    <>
+    <div className="max-w-3xl mx-auto">
       {/* <Link href="./client-form-sample">
         <p className="flex justify-center py-4 hover:underline">Client Side Rendering</p>
       </Link>
@@ -194,6 +221,6 @@ export default function Home() {
         </AnimateCardWrapper>
       } */}
 
-    </>
+    </div>
   );
 }

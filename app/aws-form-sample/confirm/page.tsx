@@ -41,7 +41,7 @@ const Page = () => {
   })
 
   return (
-    <>
+    <div className="max-w-3xl mx-auto">
       <form onSubmit={onSubmit}>
         <table className="min-w-full border-collapse border border-gray-300">
           <thead>
@@ -94,7 +94,7 @@ const Page = () => {
           <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-400 duration-200">送信する</button>
         </div>
       </form>
-    </>
+    </div>
   )
 }
 

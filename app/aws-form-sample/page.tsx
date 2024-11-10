@@ -24,9 +24,9 @@ const Page = () => {
   })
 
   return (
-    <>
+    <div className="mx-auto max-w-3xl">
       <div className="mb-8">
-        <h2 className="font-semibold text-lg mb-2">靴ブランドによるインフルエンサー招待イベントのための参加登録フォーム</h2>
+        <h2 className="font-semibold text-lg mb-2">大手フットウェアブランドによるインフルエンサー招待イベントのための参加登録フォーム</h2>
         <p className="text-sm">大手フットウェアブランドのマーケティングキャンペーンの一環として、インフルエンサーを対象としたイベント応募フォームを開発しました。セキュリティポリシーに基づき、データの転送時および保管時の暗号化が必須要件とされたのでAWSを用いて実装を行いました。こちらは実際の作成したものに似せて改めて作ったものです。</p>
 
         <h4 className="font-semibold mt-4">ポイント</h4>
@@ -154,7 +154,7 @@ const Page = () => {
         
       </form>
       
-    </>          
+    </div>          
   )
 }
 

@@ -24,8 +24,8 @@ const Page = () => {
   })
 
   return (
-    <>
-      <div className="mb-8">
+    <div className="mb-8 max-w-3xl mx-auto">
+      <div>
         <h2 className="font-semibold text-lg mb-2">インフルエンサー招待小規模イベントの応募フォームの開発 （サーバーコンポーネントでデータ取得）</h2>
         <p className="text-sm">前回に引き続き、インフルエンサーを招待するイベントのための登録フォームを開発しました。2024年3月に制作した応募フォームでは、データベースに登録する前の型チェックが不十分であり、またブラウザ側にAPIキーなどの認証情報を渡す仕様にも課題があったため、フォームの機能改善を試みました。</p>
 
@@ -37,6 +37,7 @@ const Page = () => {
           <li>フォーム入力時のエラーを未然に防ぐため、React Hook Formとzodを用いた型チェックとバリデーションを導入し、入力データの型エラーを減らした</li>
         </ul>
       </div>
+
       <form onSubmit={onSubmit}>
         <label>お名前</label>
         <input
@@ -148,7 +149,7 @@ const Page = () => {
         
       </form>
       
-    </>          
+    </div>          
   )
 }
 
