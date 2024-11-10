@@ -8,7 +8,7 @@ import { Influencer } from '@/app/types/Influencer'
 import { postInfluencerToAws } from '@/app/utils/postInfluencerToAws'
 import { decreaseStockOnAWS } from '@/app/utils/decreaseStockOnAws'
 
-const page = () => {
+const Page = () => {
   const router = useRouter()
   const { getValues, handleSubmit, reset } = useFormContext()
 
@@ -98,4 +98,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -8,7 +8,7 @@ import { Influencer } from '@/app/types/Influencer'
 import { postInfluencer } from '@/app/utils/postInfluencer'
 import { decreaseStock } from '@/app/utils/decreaseStock'
 
-const page = () => {
+const Page = () => {
   const router = useRouter()
   const { getValues, handleSubmit, reset } = useFormContext()
 
@@ -96,4 +96,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

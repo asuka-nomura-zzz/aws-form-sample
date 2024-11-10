@@ -8,7 +8,7 @@ import { FormData } from '../types/FormData';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
-const page = () => {
+const Page = () => {
   const { timeslotsFromAws: timeslots } = useAppContext()
   const {
     register,
@@ -142,4 +142,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
