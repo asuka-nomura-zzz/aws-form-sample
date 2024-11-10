@@ -5,7 +5,7 @@ import { Timeslot } from '@/app/types/Timeslot';
 import { getTimeslotsFromAws } from '../utils/getTimeslotsFromAws';
 import { Influencer } from '../types/Influencer';
 import { getInfluencersFromAws } from '../utils/getInfluencers';
-import { InfluencerWithId } from '../types/InfluencerWithoutId';
+import { InfluencerWithId } from '../types/InfluencerWithId';
 
 export const AppContext = createContext<{
   timeslots: Timeslot[],
@@ -20,7 +20,7 @@ export const AppContext = createContext<{
   influencersFromAws: [],
 
   //for ISR
-  refreshTimeslots: () => {}
+  refreshTimeslots: () => { }
 });
 
 export const AppWrapper: FC<PropsWithChildren<{
@@ -59,10 +59,10 @@ export const AppWrapper: FC<PropsWithChildren<{
 
   return (
     <AppContext.Provider value={{
-      timeslots: timeslotsState, 
-      timeslotsFromAws: timeslotsFromAwsState, 
+      timeslots: timeslotsState,
+      timeslotsFromAws: timeslotsFromAwsState,
       influencersFromAws: influencersFromAwsState,
-      
+
       //for ISR
       refreshTimeslots
     }}>

@@ -8,7 +8,9 @@ import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 // import { Influencer } from "@/app/types/Influencer";
 import { Timeslot } from "@/app/types/Timeslot";
 import toast from "react-hot-toast";
-import { InfluencerWithId } from "@/app/types/InfluencerWithoutId";
+import { InfluencerWithId } from "@/app/types/InfluencerWithId";
+const URL = process.env.NEXT_PUBLIC_API_ENDPOINT
+
 
 const AdminPage = () => {
   const { timeslotsFromAws: timeslots, influencersFromAws: influencers } =
@@ -44,17 +46,19 @@ const AdminPage = () => {
 
   const handleTimeslotEditSubmit = async (updatedData: any) => {
     try {
-      // const response = await fetch(`/api/timeslots/${updatedData.id}`, {
-      //   method: "PUT",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(updatedData),
-      // });
+      const response = await fetch(`${URL}/timeslots/${updatedData.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      });
 
-      // if (response.ok) {
-      //   alert("Timeslot data updated successfully!");
-      // } else {
-      //   alert("Failed to update timeslot data");
-      // }
+      if (response.ok) {
+        alert("Timeslot data updated successfully!");
+      } else {
+        alert("Failed to update timeslot data");
+      }
+
+
       console.log('update succeeded') // for mock
       toast.success("timeslot data updated successfully!")
     } catch (error) {
@@ -104,6 +108,9 @@ const AdminPage = () => {
           <thead>
             <tr className="bg-gray-50">
               <th className="border border-gray-200 px-4 py-2 text-left text-xs">
+                作成日時
+              </th>
+              <th className="border border-gray-200 px-4 py-2 text-left text-xs">
                 お名前
               </th>
               <th className="border border-gray-200 px-4 py-2 text-left text-xs">
@@ -138,6 +145,20 @@ const AdminPage = () => {
           <tbody>
             {influencers?.map((influencer, index) => (
               <tr key={index} className="hover:bg-gray-50">
+                <td className="border border-gray-200 px-4 py-2 text-xs truncate">
+                  {influencer.created_at ? 
+                  new Date(Number(influencer.created_at)).toLocaleString('ja-JP', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                  }) 
+                  : 
+                  ""
+                }
+                </td>
                 <td className="border border-gray-200 px-4 py-2 text-xs truncate">
                   {influencer.full_name}
                 </td>

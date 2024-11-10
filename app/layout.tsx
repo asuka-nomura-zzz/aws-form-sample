@@ -9,19 +9,19 @@ import { Timeslot } from "./types/Timeslot";
 import { Influencer } from "./types/Influencer";
 import { getInfluencersFromAws } from "./utils/getInfluencers";
 import Link from "next/link";
-import { InfluencerWithId } from "./types/InfluencerWithoutId";
+import { InfluencerWithId } from "./types/InfluencerWithId";
 
 
 export const metadata: Metadata = {
   title: 'イベント集客フォーム',
-  description:  'イベント集客フォームサンプル',
+  description: 'イベント集客フォームサンプル',
 };
 
 export const revalidate = 0;
 
-export default async function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const fetchedData = await getTimeslots();
-    
+
   const timeslots: Timeslot[] = (fetchedData ?? []).map(item => ({
     id: item.id as number,
     name: item.name as string,
