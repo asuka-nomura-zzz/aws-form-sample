@@ -10,8 +10,8 @@ import { InfluencerWithId } from "./types/InfluencerWithId";
 
 
 export const metadata: Metadata = {
-  title: 'Asuka Nomura Work Smaple',
-  description: 'Asuka Nomura Work Smaple',
+  title: 'aws form sample',
+  description: 'aws form sample',
 };
 
 export const revalidate = 0;
